@@ -1,35 +1,37 @@
-import { 
-    Box,
-    Stack,
-    Typography,
-    Grid,
- } from "@mui/material";
- import DropDown from "components/dropDownSelect/dropDown";
- import { styles } from "./MSOPredictive.styles";
- import {dropDown, TopCardData, cardDetails} from "./MSOPredictive.data";
- import { Item } from "components/ItemPaper/ItemPaper";
+import {
+  Box,
+  Grid,
+  Stack,
+  Typography,
+} from "@mui/material";
+import { Item } from "components/ItemPaper/ItemPaper";
+import { MSOOptimiserCards } from "components/OptimiserCard/OptimiserCardComponent";
+import {DropDown} from "components/DropdownComponent/DropdownComponent";
 import { LinearProgressComponent } from "components/linearProgress/linearProgress";
-import LayersIcon from "@mui/icons-material/Layers";
-import { MSOOptimiserCard } from "components/OptimiserCard/OptimiserCardComponent";
+import { appRouters } from "constants/routes";
+import { useNavigate } from "react-router-dom";
+import { TopCardData, cardDetails, dropDown } from "./MSOPredictive.data";
+import { styles } from "./MSOPredictive.styles";
 
 const MSOPredictive = () => {
+  const navigate = useNavigate();
   return (
     <>
         <Box sx={styles.container}>
-        <Stack direction="row" spacing={2}>
-          <Typography sx={styles.text}> Fiscal Year</Typography>
-          <Typography sx={styles.dropDown}>
-          <DropDown 
-                initialValue={dropDown.initalVal}
-                menuItem={dropDown.menuItem}
-              />
-          </Typography>
-        </Stack>
-        <TopCard />
+          <Stack direction="row" spacing={2}>
+            <Typography sx={styles.text}> Fiscal Year</Typography>
+            <Typography sx={styles.dropDown}>
+            <DropDown 
+                  initialValue={dropDown.initalVal}
+                  menuItem={dropDown.menuItem}
+                />
+            </Typography>
+          </Stack>
+          <TopCard />
       </Box>
 
-      <Box sx={styles.container}>
-        <Grid container>
+      
+        <Grid container mb={2}>
           {cardDetails.map((data, index) => (
             <Grid
               item
@@ -40,7 +42,7 @@ const MSOPredictive = () => {
               sm={6}
               xs={12}
             >
-              <MSOOptimiserCard
+              <MSOOptimiserCards
                 cardTitle={data.month}
                 titleChip={data.chipName}
                 titleChipColor={data.styles}
@@ -48,11 +50,16 @@ const MSOPredictive = () => {
                 skuVal={data.skus}
                 chipCategory={data.categories}
                 isData={data.isData}
+                onClickHeader={()=>{
+                  navigate(appRouters.msoPredictiveCard + index);
+                }}
+                onClickButton={()=>{
+                  navigate(appRouters.msoAddNewPlan + data.month);
+                }}
                 />
             </Grid>
           ))}
         </Grid>
-      </Box>
     </>
   )
 }
@@ -63,7 +70,7 @@ export default MSOPredictive;
 
 const TopCard = ()=>{
     return (
-           <Grid container spacing={2} mt={1}>
+           <Grid container spacing={2} >
             {
               
               TopCardData.map((data:any)=>
@@ -83,7 +90,7 @@ const TopCard = ()=>{
                     sm={6} 
                     xs={12}
                   >
-                    <LayersIcon sx={styles.promoText} />
+                    <img src="/assets/icons/layers.svg" alt="" />
                     <Typography component="span" sx={styles.promoText}>
                       {data.title}
                     </Typography>

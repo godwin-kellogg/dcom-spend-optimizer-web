@@ -13,6 +13,7 @@ import AppScreen from "../app";
 import Login from "../auth/Login";
 import { appConfig } from "config/appConfig";
 import { routes } from "constants/routes";
+import { useMsal } from "@azure/msal-react";
 
 const SplashScreen = () => {
   /**
@@ -24,6 +25,7 @@ const SplashScreen = () => {
    * @returns {React.ReactNode} The `MetaDataWrapper` component.
    */
 
+  const { accounts } = useMsal();
   const MetaDataWrapper = () => {
     useEffect(() => {
       const changeMetaData = () => {
@@ -32,7 +34,9 @@ const SplashScreen = () => {
         if (favicon) {
           favicon.href = appConfig.favicon;
         }
-        const metaDescription = document.querySelector('meta[name="description"]');
+        const metaDescription = document.querySelector(
+          'meta[name="description"]'
+        );
         if (metaDescription) {
           metaDescription.setAttribute("content", appConfig.description);
         }
@@ -45,11 +49,25 @@ const SplashScreen = () => {
   
   return (
     <BrowserRouter>
-     <MetaDataWrapper />
+      <MetaDataWrapper />
       <Routes>
         <Route path="/" element={<Navigate to={routes.login} replace />} />
+        <Route
+          path="*"
+          element={
+            <h3>
+              <code>Page You Requested Not Found</code>
+            </h3>
+          }
+        />
         <Route path={routes.login} element={<Login />} />
-        <Route path={routes.dashboard} element={<AppScreen />} />
+
+        <Route
+          path={routes.dashboard}
+          element={
+            accounts.length > 0 ? <AppScreen /> : <Navigate to={routes.login} replace />
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

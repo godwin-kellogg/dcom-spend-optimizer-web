@@ -1,38 +1,37 @@
+import CheckIcon from "@mui/icons-material/Check";
+import RepeatSharpIcon from "@mui/icons-material/RepeatSharp";
+import SaveIcon from "@mui/icons-material/Save";
+import ViewComfyOutlinedIcon from "@mui/icons-material/ViewComfyOutlined";
 import {
   Box,
-  Typography,
-  Grid,
-  Table,
-  TableHead,
-  TableBody,
-  TableCell,
-  TableRow,
-  TableContainer,
   Checkbox,
-  IconButton,
-  TableFooter,
   FormGroup,
-  styled,
+  Grid,
+  IconButton,
+  Stack,
   Switch,
   SwitchProps,
-  Stack,
-  Divider,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableFooter,
+  TableHead,
+  TableRow,
+  Typography,
+  styled
 } from "@mui/material";
-import { styles } from "./TPOPrediction.styles";
-import DropDown from "components/dropDownSelect/dropDown";
-import { CalendarComponent } from "components/calendar/calendar";
-import {
-  rows,
-  TableHeadData,
-  TableFooterData,
-  Category,
-  Budget,
-} from "./TPOPredictionData";
-import CheckIcon from "@mui/icons-material/Check";
-import ViewComfyOutlinedIcon from "@mui/icons-material/ViewComfyOutlined";
-import RepeatSharpIcon from "@mui/icons-material/RepeatSharp";
 import MSButton from "components/MSButton/MSButton";
-import SaveIcon from "@mui/icons-material/Save";
+import { CalendarComponent } from "components/calendar/calendar";
+import {DropDown} from "components/DropdownComponent/DropdownComponent";
+import { styles } from "./TPOPrediction.styles";
+import {
+  Budget,
+  Category,
+  TableFooterData,
+  TableHeadData,
+  rows,
+} from "./TPOPredictionData";
 
 const IOSSwitch = styled((props: SwitchProps) => (
   <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />

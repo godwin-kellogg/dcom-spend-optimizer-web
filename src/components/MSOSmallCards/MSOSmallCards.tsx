@@ -12,9 +12,9 @@ export const Cards = ({
     productName
 }:MSOCards)=>{
     return (
-        <Item padding="0rem">
+        <Item padding="0" radius="0.2rem">
             <Typography sx={styles.cardMainText}>
-                <Typography align="center" mr={1} sx={styles.cardText}>
+                <Typography align="center" sx={styles.cardText}>
                     {allocated}
                     <Typography sx={styles.cardTitle}>
                         Allocated
@@ -22,10 +22,10 @@ export const Cards = ({
                 </Typography>
 
                 <Typography>
-                    <img src={imgUrl} alt="chocos"></img>
+                    <img src={imgUrl} width={80} height={80} alt="TPO"></img>
                 </Typography>
 
-                <Typography align="center" ml={1} sx={styles.cardText}>
+                <Typography align="center" sx={styles.cardText}>
                     {actual}
                     <Typography sx={styles.cardTitle}>
                         Actual

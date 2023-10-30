@@ -1,52 +1,64 @@
 .expandedAccordion {
-    background-color: rgba(43, 82, 221, 1);
-    color: var(--button-primary-on-primary, #DAE0F9);
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.07813rem;
-    border-radius: 0.5rem;
+  background-color: rgba(43, 82, 221, 1);
+  color: var(--button-primary-on-primary, #dae0f9);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.03125rem;
+  border-radius: 0.5rem;
+  padding-right: 1;
+  padding-left: 0;
 }
 
-.expandedAccordionNoraml {
-    color: var(--color-set-type-black-primary, #202020);
-    font-size: 0.75rem;
-    font-style: normal;
-    font-weight: 700;
-    letter-spacing: 0.07813rem;
-
+.expandedAccordionNormal {
+  color: var(--color-set-type-black-primary, #202020);
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0.03125rem;
 }
 
-.listIconsExpended{
-    color: var(--button-primary-on-primary, #DAE0F9);
-    font-size: 0.75rem;
-    font-weight: 700;
+.listIconsExpended {
+  color: var(--button-primary-on-primary, #dae0f9);
+  font-size: 0.75rem;
+  font-weight: 700;
 }
 
 .listIconNormal {
-    color: black;
-    font-size: 0.75rem;
-    font-weight: 700;
+  color: black;
+  font-size: 0.75rem;
+  font-weight: 700;
 }
-.listItems{
-    color: black;
-    font-size: 0.875rem;
-    font-weight: 600;
-    letter-spacing: 0.07813rem;
-    cursor: pointer;
-    
+.listItems {
+  color: rgba(80, 81, 82, 1);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.03125rem;
+  cursor: pointer;
+  font-style: normal;
+}
+.listItems-active {
+  color: rgba(34, 34, 35, 1);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.03125rem;
+  cursor: pointer;
+  font-style: normal;
 }
 
-.listTypography{
-    width:100%;
-    height :1.5rem;
-    display:flex;
-    justify-content:space-around;
-    align-items:center;
-    margin-top: 0.5rem;
-
+.listTypography {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.5rem;
 }
-.closeIcon{
-    margin: 1rem;
-    color: black;
+.closeIcon {
+  margin: 1rem;
+  color: black;
+  font-weight: 600;
+}
+.home-text{
+    margin: "-3px";
     font-weight: 600;
+    font-size: "1rem";
+    letter-spacing: "0.03125rem";
 }

@@ -1,11 +1,10 @@
 export const cardStyles = {
-  cardMain: { width: "100%", height: "auto", maxWidth: 235 },
-  text: { fontSize: "0.8rem", fontWeight: 500, color: "rgba(34, 34, 35, 1)" },
+  tpoMain : {width: "100%", height: "auto", maxWidth: 235},
+  text: { fontSize: "0.8rem", fontWeight: 500, color: "rgba(34, 34, 35, 1)", ml : 1 },
   textBig: {
     fontSize: "1.25rem",
     fontWeight: 700,
     color: "rgba(36, 68, 185, 1)",
-    marginTop: 5,
   },
   cardAction: {
     display: "flex",

@@ -1,52 +1,75 @@
-.filterText{
-    color: #313131;
-    font-size: 1rem;
-    font-weight: 600;
-    letter-spacing: 0.03125rem;
-};
-
-.custom-drawer {
-    transition: width 1s;
-    flex-shrink: 0;
-    margin-bottom: 1rem;
-  }
-  
-.custom-drawer .MuiDrawer-paper {
-    /* min-width: 10rem; */
-    max-width: 18rem;
-    box-sizing: border-box;
-    height: 73%;
-    margin-top: 6.5rem;
-    background-color: white;
-    border-radius: 0.5rem;
-    margin-left: 2rem; 
+.filterText {
+  color: #313131;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.03125rem;
 }
 
-.titleText{
-    color: var(--backgrounds-on-base, #222223);
-    font-size: 0.875rem;
-    font-weight: 600;
-    letter-spacing: 0.00625rem;
-}
-.container-header{
-    height : 2.5rem;
-    font-size: 1rem;
-    font-weight: 600;
-    margin: 1px 1px -2px 0;
+
+.titleText {
+  color: var(--backgrounds-on-base, #222223);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.00625rem;
 }
 
-.main-container {
-    width: 100%;
-    margin-bottom: 2rem;
-    height: auto;
+.table-header-text {
+  color: #202020;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.5rem;
+  letter-spacing: 0.03125rem;
+  text-align: center;
 }
 
-.table-header-text{
-color: #202020;
-font-size: 1rem;
-font-style: normal;
-font-weight: 600;
-line-height: 1.5rem; /* 150% */
-letter-spacing: 0.03125rem;
+.table-scroll-bar::-webkit-scrollbar {
+  height: 3px;
 }
 
+.table-scroll-bar::-webkit-scrollbar-track {
+  background-color: rgba(212, 212, 212, 1);
+}
+
+.table-scroll-bar::-webkit-scrollbar-thumb {
+  background-color: rgba(42, 66, 148, 1);
+  border-radius: 5px;
+}
+
+.sticky-table-cell{
+    border: 1px solid rgba(212, 212, 212, 1);
+  min-width: 160px;
+  position: sticky;
+  left: 0;
+  z-index: 900;
+  background-color: white;
+}
+.grey-table{
+    background-color: rgb(239 239 239);
+    border: 1px solid rgba(212, 212, 212, 1);
+}
+
+.white-table{
+    border: 1px solid rgba(212, 212, 212, 1);
+}
+
+.comptetior-card-id{
+  height: 40px;
+  width: 40px;
+  background-color: rgba(251, 251, 252, 1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.comptetior-card-text{
+  overflow: hidden;
+  color: rgba(32, 32, 32, 1);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.5rem;
+  letter-spacing: 0.03125rem;
+  margin-top: 1rem;
+}

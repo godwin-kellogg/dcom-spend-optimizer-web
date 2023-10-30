@@ -41,7 +41,9 @@ export interface TPOChips {
 
 export interface TPOChipComponent {
   value:string|number;
-  customColor:string;
+  color:string;
+  backGroundColor? : string;
+  sx?:any|string;
 };
 
 
@@ -106,12 +108,9 @@ export interface TPOData{
 }
 
 export interface AccordionData {
-  icon: JSX.Element;
+  icon: string;
   title: string;
   panel: string;
-  // path1:string;
-  // path2:string;
-  // path3?:string;
   toggleDrawer : (open:boolean) => () => void;
   content:any[];
 };
@@ -120,4 +119,14 @@ export interface ComptetiorCardData {
   id:number;
   imgSrc : string;
   textData :string;
+};
+
+export interface calendarProps {
+  onDateSelect?: (value: any) => void;
+  isFrom?: boolean;
+}
+export interface DropdownProps {
+  initialValue:any;
+  menuItem:any[];
+  onChange?:(value:any)=>void;
 };

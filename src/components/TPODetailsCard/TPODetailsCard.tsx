@@ -3,7 +3,7 @@ import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import GridViewIcon from '@mui/icons-material/GridView';
 import { styles } from "./TPOCardStyles";
 import { TPODetailsCard} from "../../@types/components";
-import {TPOPlanChip} from "../TPOChip/tpoChip";
+import {TPOPlanChip} from "../TPOChip/tpoChips";
 
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import AddIcon from '@mui/icons-material/Add';
@@ -28,7 +28,7 @@ export const TPODetailsCards = ({
                 <Grid container>
                     <Grid item md={6} sm={6}>
                         <Typography onClick={titleClick} component="span" sx={styles.titleText}>{title}</Typography>
-                        <TPOPlanChip value={chipLabel} customColor={"green"} />
+                        <TPOPlanChip value={chipLabel} color={"green"} />
                     </Grid>
                     <Grid item md={6} sm={6} sx={{textAlign : "right"}}>
                         <Tooltip title="View More" arrow

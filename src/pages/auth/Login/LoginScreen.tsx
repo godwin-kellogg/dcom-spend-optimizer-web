@@ -39,7 +39,7 @@ const LoginScreen = ({ onClickLogin }: LoginScreenProps) => {
               style={styles.logo}
             />
             <Typography variant="h4" fontSize={28} fontWeight={700}>
-              Login
+              Log In
             </Typography>
           </Box>
           <Box>

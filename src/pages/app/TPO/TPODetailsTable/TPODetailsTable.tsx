@@ -2,7 +2,6 @@ import { styles } from "./TPODetailsTable.styles";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   Grid,
-  Button,
   Typography,
   Table,
   Paper,
@@ -16,7 +15,7 @@ import {
   AccordionSummary,
   AccordionDetails,
 } from "@mui/material";
-import { TPOChip } from "components/TPOChip/tpoChip";
+import {TPOPlanChip } from "components/TPOChip/tpoChips";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import TaskAltOutlinedIcon from "@mui/icons-material/TaskAltOutlined";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
@@ -43,9 +42,9 @@ const TPOTable = () => {
             <ArrowBackIcon />
           </IconButton>
           <Typography sx={styles.title} component="span">
-            {param.item}
+            {param.name}
           </Typography>
-          <TPOChip value={`In-plan`} boolVal={true} />
+          <TPOPlanChip value={`In-plan`} color="" />
         </Grid>
         <Grid item md={6} sx={{display:"flex", justifyContent : "end", paddingRight : 2}}>
            <IconButton size="small" sx={{
@@ -94,16 +93,16 @@ const CustomTable = ()=>{
           </TableHead>
 
           <TableBody>
-            {rows.map((row:any, value:number) => (
+            {rows.map((row, value) => (
               <TableRow sx={{padding : 0}} key={value}>
                 <TableCell colSpan={8} sx={{padding : 0, border : 0}}>
                   <Accordion 
                     defaultExpanded={true}
                     disableGutters={true}
                     square={true}
-                      TransitionProps={{ unmountOnExit: true }} 
-                      sx={{padding : 0, border : 0, margin : 0}}>
-
+                    TransitionProps={{ unmountOnExit: true }} 
+                    sx={{padding : 0, border : 0, margin : 0}}
+                    >
                     <AccordionSummary 
                     expandIcon={
                     <ExpandMoreIcon />

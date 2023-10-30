@@ -13,8 +13,6 @@
 
 import Header from "../header";
 import { Box,} from "@mui/material";
-
-// import { menuItems } from "../../constants/menuItems";
 import { DashboardLayoutProps } from "../../@types/components";
 
 const DashboardLayout = ({ children }: DashboardLayoutProps) => {

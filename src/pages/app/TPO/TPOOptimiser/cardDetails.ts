@@ -202,17 +202,19 @@ export const dropDown = {
 };
 
 
-export const TopCardData:any = [
+export const TopCardData = [
   {
     title : "Promos/Plans",
     running : 16,
-    total : 40,
-    values : [0, 10, 20, 30, 40]
+    total : "40 Lacs",
+    values : [0, 10, 20, 30, 40],
+    img : "/assets/icons/layers.svg"
   },
   {
     title : "Spend/Budget",
     running: 52,
-    total :  "80 Lacs",
-    values : ["₹0L", "₹20L", "₹40L", "₹60L", "₹80L"]
+    total : "80 Lacs",
+    values : ["₹0L", "₹20L", "₹40L", "₹60L", "₹80L"],
+    img : "/assets/icons/rupee-sign.png"
   }
 ]

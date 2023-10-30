@@ -2,6 +2,7 @@ import { Card, CardContent, CardActions, Typography } from "@mui/material";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import { cardStyles } from "./ProgressCard.styles";
 import { CardProps } from "../../@types/components";
+import { Item } from "components/ItemPaper/ItemPaper";
 
 export const TPOProgressCard = ({
   header,
@@ -18,7 +19,7 @@ export const TPOProgressCard = ({
   };
 
   return (
-    <Card variant="outlined" style={cardStyles.cardMain}>
+    <Card variant="outlined" style={cardStyles.tpoMain}>
       <CardContent>
         <Typography style={cardStyles.text}>{subHeader}</Typography>
         <Typography style={cardStyles.textBig}>{header}</Typography>
@@ -41,11 +42,9 @@ export const TPOProgressCard = ({
 
 export const MSOProgressCard = ({ header, subHeader }: CardProps) => {
   return (
-    <Card variant="outlined" style={cardStyles.cardMain}>
-      <CardContent>
-        <Typography style={cardStyles.text}>{subHeader}</Typography>
-        <Typography style={cardStyles.textBig}>{header}</Typography>
-      </CardContent>
-    </Card>
+    <Item radius="0.5rem">
+      <Typography style={cardStyles.text} ml={1}>{subHeader}</Typography>
+      <Typography  style={cardStyles.textBig} ml={1}>{header}</Typography>
+    </Item>
   );
 };

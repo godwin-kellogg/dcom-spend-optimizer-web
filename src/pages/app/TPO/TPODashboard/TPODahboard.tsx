@@ -1,7 +1,7 @@
 import {
   ArrowForward,
   ChevronLeft,
-  FilterAltOutlined
+  FilterAltOutlined,
 } from "@mui/icons-material";
 import {
   Box,
@@ -13,30 +13,19 @@ import {
   ListItem,
   ListItemText,
   Typography,
-  styled
 } from "@mui/material";
 import { Item } from "components/ItemPaper/ItemPaper";
 import MSButton from "components/MSButton/MSButton";
 import { TPOProgressCard } from "components/ProgressCard/ProgressCard";
 import { CalendarComponent } from "components/calendar/calendar";
-import DropDown from "components/dropDownSelect/dropDown";
-import { Filter } from "components/sidebar/FilterSidebar";
+import {DropDown} from "components/DropdownComponent/DropdownComponent";
+import { Filter, DrawerHeader } from "components/sidebar/FilterSidebar";
 import React from "react";
 import "./TPODashboard.css";
-import { CardData, ChangedCardData, filterCategory, filterSKUs, filterPromotion } from "./TPODashboardData";
+import { CardData, ChangedCardData } from "./TPODashboardData";
 import TPODashboardGraph from "./TPOGraphs/TPODashboardGraph";
-import {data, dataChanged} from "./TPOGraphs/chartData";
-
-
-
-const DrawerHeader = styled("div")(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  padding: theme.spacing(0, 1),
-  ...theme.mixins.toolbar,
-  justifyContent: "space-between",
-}));
-
+import { data, dataChanged } from "./TPOGraphs/chartData";
+import { filterApi } from "api/tpo.api";
 
 const TPODashboard = () => {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
@@ -46,110 +35,103 @@ const TPODashboard = () => {
     setDrawerOpen(!drawerOpen);
   };
 
+  const [category, setCategory] = React.useState<any>();
 
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await filterApi();
+        setCategory(response.result);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
   return (
-
-     <Grid container sx={{ ml: -4, height: "auto" }}>
-        <Grid item 
-          xs={drawerOpen ? 3 : 0.5} 
-          sm={drawerOpen ? 3 : 0.5} 
-          md={drawerOpen ? 2.5 : 0.5}
-          xl={drawerOpen ? 2.5 : 0.5}
-        >
-          {drawerOpen ? (
-            <FilterSidebar
-              open={drawerOpen}
-              onClose={handleFilterButtonClick}
-              onFilterDataChange={()=>{
-                setValue(!isValue)
-              }}
-            />
-          ) : (
-            <Filter handleFilterButtonClick={handleFilterButtonClick} />
-          )}
-        </Grid>
-
-        <Grid
-          item  
-          sx={{marginTop : 1}} 
-          xs={drawerOpen ? 12 : 11.5} 
-          sm={drawerOpen ? 12 : 11.5} 
-          md={drawerOpen ? 9.5 : 11.5}
-          xl={drawerOpen ? 9.5 : 11.5}
-        >
-          <RightConatiner value={isValue} />
-        </Grid>
+    <Grid container sx={{ ml: -4 }}>
+      <Grid item>
+        {drawerOpen ? (
+          <FilterSidebar
+            open={drawerOpen}
+            onClose={handleFilterButtonClick}
+            onFilterDataChange={() => {
+              setValue(!isValue);
+            }}
+            data={category}
+          />
+        ) : (
+          <Filter handleFilterButtonClick={handleFilterButtonClick} />
+        )}
       </Grid>
+
+      <Grid
+        item
+        sx={{ mt: 1, mr: 2, position: "absolute", left: drawerOpen ? 330 : 70 }}
+      >
+        <RightConatiner value={isValue} />
+      </Grid>
+    </Grid>
   );
 };
 
 export default TPODashboard;
 
-
-
-const RightConatiner = ({value}:any) => {
-
+const RightConatiner = ({ value }: any) => {
   return (
+    <Box className="main-container">
+      <Grid container spacing={2}>
+        {(value ? ChangedCardData : CardData).map((data, index) => (
+          <Grid item xs={12} md={12} lg={data.lg} key={index}>
+            <Item>
+              <Typography className="container-header">{data.title}</Typography>
+              <Grid container spacing={1}>
+                {data.cards.map((value, index) => (
+                  <Grid item xs={6} sm={4} md={4} lg={value.lg} key={index}>
+                    <TPOProgressCard
+                      header={value.header}
+                      subHeader={value.subHeader}
+                      bgColor={value.bgColor}
+                      actionLeft={value.leftAction}
+                      actionRight={value.rightAction}
+                      arrowIcon={value.arrowIcon}
+                      rightColor={value.rightColor}
+                    />
+                  </Grid>
+                ))}
+              </Grid>
+            </Item>
+          </Grid>
+        ))}
+      </Grid>
 
-      <Box className="main-container">
-        <Grid container spacing={2}>
-          {(value ? ChangedCardData : CardData).map((data, index) => (
-            <Grid item xs={12} md={12} lg={data.lg} key={index}>
-              <Item>
-                <Typography className="container-header">
-                  {data.title}
-                </Typography>
-                <Grid container spacing={1}>
-                  {data.cards.map((value, index) => (
-                    <Grid item xs={6} sm={4} md={4} lg={value.lg} key={index}>
-                      <TPOProgressCard
-                        header={value.header}
-                        subHeader={value.subHeader}
-                        bgColor={value.bgColor}
-                        actionLeft={value.leftAction}
-                        actionRight={value.rightAction}
-                        arrowIcon={value.arrowIcon}
-                        rightColor={value.rightColor}
-                      />
-                    </Grid>
-                  ))}
-                </Grid>
-              </Item>
-            </Grid>
-          ))}
-        </Grid>
-
-        <Box sx={{marginTop : 3, marginBottom : 3}}>
-          
-          <TPODashboardGraph data={
-            value ? dataChanged : data
-          } />
-          
-        </Box>
+      <Box sx={{ marginTop: 3, marginBottom: 3 }}>
+        <TPODashboardGraph data={value ? dataChanged : data} />
       </Box>
+    </Box>
   );
 };
 
+function FilterSidebar({ open, onClose, onFilterDataChange, data }: any) {
+  console.log("data got", data);
 
-
-
-function FilterSidebar({ open, onClose, onFilterDataChange }: any) {
-  function applyFilters (){
-    onFilterDataChange('changed');
+  function applyFilters() {
+    onFilterDataChange("changed");
   }
 
-  const handleDropDownChange = (type:string, value:any) => {
+  const handleDropDownChange = (type: string, value: any) => {
     console.log("value From Change DropDown", value, type);
-    onFilterDataChange('changed');
+    onFilterDataChange("changed");
   };
 
-  const onChangeMethod = (type:string,value:any)=>{
-    console.log("Data Chabge", value.$d, type)
-  }
+  const onChangeMethod = (type: string, value: any) => {
+    console.log("Data Chabge", value.$d, type);
+  };
 
   return (
     <Drawer
-      className="custom-drawer "
+      className="custom-drawer"
       variant="persistent"
       anchor="left"
       open={open}
@@ -159,7 +141,8 @@ function FilterSidebar({ open, onClose, onFilterDataChange }: any) {
           <IconButton
             sx={{ color: "rgba(43, 82, 221, 1)" }}
             disableRipple
-            >
+            size="small"
+          >
             <FilterAltOutlined />
           </IconButton>
           Filter
@@ -176,8 +159,8 @@ function FilterSidebar({ open, onClose, onFilterDataChange }: any) {
             <Typography className="titleText">Category</Typography>
             <Typography>
               <DropDown
-                initialValue={filterCategory.initialVal}
-                menuItem={filterCategory.Category}
+                initialValue={data.categories[0]}
+                menuItem={data.categories}
                 onChange={(value) => handleDropDownChange("Category", value)}
               />
             </Typography>
@@ -186,10 +169,10 @@ function FilterSidebar({ open, onClose, onFilterDataChange }: any) {
         <ListItem>
           <ListItemText>
             <Typography className="titleText">SKUs</Typography>
-            <Typography>
+            <Typography sx={{ width: "100%" }}>
               <DropDown
-                initialValue={filterSKUs.initialVal}
-                menuItem={filterSKUs.Category}
+                initialValue={data.skus[0]}
+                menuItem={data.skus}
                 onChange={(value) => handleDropDownChange("SKUs", value)}
               />
             </Typography>
@@ -200,8 +183,8 @@ function FilterSidebar({ open, onClose, onFilterDataChange }: any) {
             <Typography className="titleText">Promotion</Typography>
             <Typography>
               <DropDown
-                initialValue={filterPromotion.initialVal}
-                menuItem={filterPromotion.Category}
+                initialValue={data.promotions[0]}
+                menuItem={data.promotions}
                 onChange={(value) => handleDropDownChange("Promotion", value)}
               />
             </Typography>
@@ -216,8 +199,11 @@ function FilterSidebar({ open, onClose, onFilterDataChange }: any) {
                 From
               </Typography>
               <Typography>
-                <CalendarComponent isFrom={true}
-                onDateSelect={(value:any)=>{onChangeMethod('From', value)}} 
+                <CalendarComponent
+                  isFrom={true}
+                  onDateSelect={(value: any) => {
+                    onChangeMethod("From", value);
+                  }}
                 />
               </Typography>
             </ListItem>
@@ -226,22 +212,26 @@ function FilterSidebar({ open, onClose, onFilterDataChange }: any) {
                 To
               </Typography>
               <Typography>
-                <CalendarComponent isFrom={false}
-                onDateSelect={(value:any)=>{onChangeMethod('To', value)}} 
-              />
+                <CalendarComponent
+                  isFrom={false}
+                  onDateSelect={(value: any) => {
+                    onChangeMethod("To", value);
+                  }}
+                />
               </Typography>
             </ListItem>
           </ListItemText>
         </ListItem>
       </List>
 
-      <Divider sx={{ mt: 3 }} />
-      <MSButton
-        title="Apply"
-        sx={{ margin: 2, width: "40%" }}
-        endIcon={<ArrowForward />}
-        onClick={applyFilters}
-      />
+      <Divider sx={{ mt: 1 }} />
+      <Box sx={{ padding: "0.875rem" }}>
+        <MSButton
+          title="Apply"
+          endIcon={<ArrowForward />}
+          onClick={applyFilters}
+        />
+      </Box>
     </Drawer>
   );
-};
+}

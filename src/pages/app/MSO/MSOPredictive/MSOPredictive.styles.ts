@@ -18,7 +18,7 @@ export const styles = {
         color : "rgba(32, 32, 32, 0.8)",
         fontSize: "1.3rem",
         fontWeight: 700,
-        marginLeft : 1
+        marginLeft : 1.5
     },
     valueText : {
         color : "rgba(43, 82, 221, 1)",

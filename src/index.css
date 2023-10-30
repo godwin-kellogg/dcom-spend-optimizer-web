@@ -1,33 +1,56 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-
-  .custom-my-class{
-    color : green;
+  .custom-my-class {
+    color: green;
   }
 
-
-  .custom-container{
+  .custom-container {
     width: 100%;
-    height : auto;
+    height: auto;
     background-color: white;
-    border-radius: 0.875rem;
-    padding : 1rem;
+    border-radius: 0.5rem;
     margin-bottom: 2rem;
   }
+  .box-shadow-custom {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
+  }
 
+  .custom-drawer {
+    transition: width 1s;
+    flex-shrink: 0;
+    margin-bottom: 1rem;
+  }
 
-
+  .custom-drawer .MuiDrawer-paper {
+    max-width: 18rem;
+    box-sizing: border-box;
+    height: 73vh;
+    margin-top: 6.5rem;
+    background-color: white;
+    border-radius: 0.5rem;
+    margin-left: 2rem;
+  }
+  .main-container {
+    width: 100%;
+    margin-bottom: 2rem;
+    height: auto;
+  }
+  .container-header {
+    height: 2.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 1px 1px -2px 0;
+  }
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
-    /* color:#20202080 */
-};
-
+  /* color:#20202080 */
+}

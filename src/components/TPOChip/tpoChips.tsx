@@ -1,5 +1,5 @@
 
-import { styles } from "./tpoChip.styles";
+import { styles } from "./tpoChips.styles";
 import { Chip } from "@mui/material";
 import { TPOChipComponent, TPOChips } from "../../@types/components";
 
@@ -18,12 +18,12 @@ export const TPOChip = ({value, boolVal}:TPOChips)=>{
 };
 
 
-export const TPOPlanChip = ({customColor,value}:TPOChipComponent)=>{
+export const TPOPlanChip = ({color ,value, backGroundColor, sx}:TPOChipComponent)=>{
     return (
         <Chip 
             size="small"
             label={value}
-            sx={{color : customColor}}
+            sx={{color : color, backgroundColor : backGroundColor, sx}}
         />
     )
 }

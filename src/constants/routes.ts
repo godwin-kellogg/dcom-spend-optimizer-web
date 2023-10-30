@@ -2,23 +2,25 @@ export const path = "/CrunchLab";
 
 const predictiveDetails = "/details";
 const details = "/more";
+const addPredction = "/addPrediction";
 
 const msoHome = "/SalesBbOptimizer";
 const MSORoutes = {
   msoDescriptive : `${msoHome}/descriptive`,
   msoPredictive : `${msoHome}/predictive`,
   msoAmazonPi : `${msoHome}/amazonpi`,
-  msoPredictiveCard : `${msoHome}/predictive/${predictiveDetails}`
+  msoPredictiveCard : `${msoHome}/predictive${predictiveDetails}/:id`,
+  msoAddNewPlan : `${msoHome}/predictive${addPredction}/:month`,
+  msoDetailsTable : `${msoHome}/predictive${predictiveDetails}${details}/:id/:name`
 }
 
 const tpoOptimiser = "/TradePromoOptimizer/predictive";
-const tpoPredction = "/addPrediction";
 const TPORoutes = {
   tpoDashboard: "/TradePromoOptimizer/descriptive",
   tpoOptimiser: tpoOptimiser,
   tpoDetails : `${tpoOptimiser}${predictiveDetails}/:id`,
-  tpoTable : `${tpoOptimiser}${predictiveDetails}${details}/:id/:item`,
-  tpoPredction : `${tpoOptimiser}${predictiveDetails}${tpoPredction}/:month`
+  tpoTable : `${tpoOptimiser}${predictiveDetails}${details}/:id/:name`,
+  tpoAddNewPlan : `${tpoOptimiser}${predictiveDetails}${addPredction}/:month`
 };
 
 
@@ -32,9 +34,11 @@ export const routes = {
   tpoOptimiser: TPORoutes.tpoOptimiser,
   tpoDetails : TPORoutes.tpoDetails,
   tpoTable : TPORoutes.tpoTable,
-  tpoPredction : TPORoutes.tpoPredction,
+  tpoAddPredction : TPORoutes.tpoAddNewPlan,
   msoAmazonPi : MSORoutes.msoAmazonPi,
-  msoPredictiveCard : MSORoutes.msoPredictiveCard
+  msoPredictiveCard : MSORoutes.msoPredictiveCard,
+  msoAddNewPlan : MSORoutes.msoAddNewPlan,
+  msoDetailsTable : MSORoutes.msoDetailsTable
 };
 
 export const appRouters = {
@@ -45,9 +49,11 @@ export const appRouters = {
   tpoOptimiser : `${path}${routes.tpoOptimiser}`,
   tpoDetails : `${path}${tpoOptimiser}${predictiveDetails}/`,
   tpoTable : `${path}${tpoOptimiser}${predictiveDetails}${details}/`,
-  tpoPredction : `${path}${tpoOptimiser}${predictiveDetails}${tpoPredction}/`,
+  tpoAddPredction : `${path}${tpoOptimiser}${predictiveDetails}${addPredction}/`,
   msoAmazonPI : `${path}${routes.msoAmazonPi}`,
-  msoPredictiveCard : `${path}${msoHome}/predictive/${predictiveDetails}`
+  msoPredictiveCard : `${path}${msoHome}/predictive${predictiveDetails}/`,
+  msoAddNewPlan : `${path}${msoHome}/predictive${addPredction}/`,
+  msoDetailsTable : `${path}${msoHome}/predictive${predictiveDetails}${details}/`
 };
 
 

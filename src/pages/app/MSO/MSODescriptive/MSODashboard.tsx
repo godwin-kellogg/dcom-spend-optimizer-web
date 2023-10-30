@@ -1,45 +1,51 @@
-import React from "react";
+import { ArrowForward, ChevronLeft } from "@mui/icons-material";
+import FilterAltOutlined from "@mui/icons-material/FilterAltOutlined";
 import {
-  Grid,
-  Typography,
   Box,
+  Divider,
+  Drawer,
   FormControl,
+  FormControlLabel,
+  Grid,
+  IconButton,
   List,
   ListItem,
+  ListItemText,
   Radio,
   RadioGroup,
-  ListItemText,
-  FormControlLabel,
   RadioProps,
+  Typography,
   styled,
-  
 } from "@mui/material";
-import { FilterSidebar, Filter } from "components/sidebar/FilterSidebar";
+import { DropDown } from "components/DropdownComponent/DropdownComponent";
+import { Item } from "components/ItemPaper/ItemPaper";
+import MSButton from "components/MSButton/MSButton";
+import { Cards } from "components/MSOSmallCards/MSOSmallCards";
+import { MSOProgressCard } from "components/ProgressCard/ProgressCard";
+import { CalendarComponent } from "components/calendar/calendar";
+import { DrawerHeader, Filter } from "components/sidebar/FilterSidebar";
+import React from "react";
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  Label,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 import {
   CardData,
-  data,
-  smallCardData,
-  dropDownVal,
-  SpendImage,
-  SpendData,
   DisplayData,
-  smallData
+  SpendData,
+  SpendImage,
+  data,
+  dropDownVal,
+  smallCardData,
+  smallData,
 } from "./MSODashboard.data";
-import { Item } from "components/ItemPaper/ItemPaper";
-import { MSOProgressCard } from "components/ProgressCard/ProgressCard";
 import { styles } from "./MSODashboard.styles";
-import {
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-  YAxis,
-  XAxis,
-  Tooltip,
-  CartesianGrid,
-} from "recharts";
-import { TopRankingTable } from "components/TopRankingKeywords/TopRankingTable";
-import { Cards } from "components/MSOSmallCards/MSOSmallCards";
-import DropDown from "components/dropDownSelect/dropDown";
 
 const MSODashboard = () => {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
@@ -49,14 +55,8 @@ const MSODashboard = () => {
   };
 
   return (
-    <Grid container sx={{ ml: -4, height: "auto" }}>
-      <Grid
-        item
-        xs={drawerOpen ? 3 : 0.5}
-        sm={drawerOpen ? 3 : 0.5}
-        md={drawerOpen ? 3 : 0.5}
-        xl={drawerOpen ? 2.5 : 0.5}
-      >
+    <Grid container sx={{ ml: -4 }}>
+      <Grid item>
         {drawerOpen ? (
           <FilterSidebar open={drawerOpen} onClose={handleFilterButtonClick} />
         ) : (
@@ -65,12 +65,8 @@ const MSODashboard = () => {
       </Grid>
 
       <Grid
-        sx={{ marginTop: 1 }}
+        sx={{ mt: 1, mr: 2, position: "absolute", left: drawerOpen ? 330 : 70 }}
         item
-        xs={drawerOpen ? 12 : 11.5}
-        sm={drawerOpen ? 12 : 11.5}
-        md={drawerOpen ? 12 : 11.5}
-        xl={drawerOpen ? 9.5 : 11.5}
       >
         <RightConatiner />
       </Grid>
@@ -88,19 +84,17 @@ const RightConatiner = () => {
           <Grid item xs={12} md={12} lg={data.lg} key={index}>
             <Item>
               <Typography sx={styles.containerHeader}>{data.title}</Typography>
-              <Grid container spacing={1}>
+              <Grid container spacing={2}>
                 {data.cards.map((value) => (
                   <Grid
                     item
                     xs={6}
-                    sm={4}
+                    sm={6}
                     md={4}
                     lg={value.lg}
                     key={value.header}
                   >
-                    <MSOProgressCard
-                      {...value}
-                    />
+                    <MSOProgressCard {...value} />
                   </Grid>
                 ))}
               </Grid>
@@ -112,56 +106,135 @@ const RightConatiner = () => {
       {/* Mso Charts Data */}
       <MsoCharts />
 
-      {/* Small Cards */}
-      <Box className="custom-container" mt={2}>
-        <Typography
-          sx={{ fontWeight: 600, color: "rgba(32, 32, 32, 1)", mb: 1 }}
-        >
-          Spend Comparison Category
-        </Typography>
-        <Grid container spacing={2}>
-          {smallCardData.map((data) => (
-            <Grid item md={12 / smallCardData.length} key={data.productName}>
-              <Cards {...data} key={data.actual} />
-            </Grid>
-          ))}
-        </Grid>
-      </Box>
-
       {/* Spend Comaprisan Category */}
-
       <MsoSpendComparisan />
     </Box>
   );
 };
 
+function FilterSidebar({ open, onClose }: any) {
+  return (
+    <Drawer
+      className="custom-drawer"
+      variant="persistent"
+      anchor="left"
+      open={open}
+    >
+      <DrawerHeader>
+        <Typography className="filterText">
+          <IconButton sx={{ color: "rgba(43, 82, 221, 1)" }} disableRipple>
+            <FilterAltOutlined />
+          </IconButton>
+          Filter
+        </Typography>
+        <IconButton onClick={onClose}>
+          <ChevronLeft />
+        </IconButton>
+      </DrawerHeader>
+      <Divider sx={{ mt: -1 }} />
+
+      <List>
+        <ListItem>
+          <ListItemText>
+            <Typography className="titleText">Category</Typography>
+            <Typography>
+              <DropDown initialValue={"Category"} menuItem={["Category"]} />
+            </Typography>
+          </ListItemText>
+        </ListItem>
+        <ListItem>
+          <ListItemText>
+            <Typography className="titleText">Time Frame</Typography>
+            <ListItem>
+              <Typography mr={2} className="titleText">
+                From
+              </Typography>
+              <Typography>
+                <CalendarComponent isFrom={true} />
+              </Typography>
+            </ListItem>
+            <ListItem sx={{ marginTop: 3 }}>
+              <Typography mr={4.5} className="titleText">
+                To
+              </Typography>
+              <Typography>
+                <CalendarComponent isFrom={false} />
+              </Typography>
+            </ListItem>
+          </ListItemText>
+        </ListItem>
+      </List>
+
+      <Box
+        sx={{
+          position: "absolute",
+          bottom: 0,
+          width: "100%",
+          height: "8vh",
+        }}
+      >
+        <Divider />
+        <MSButton
+          title="Apply"
+          sx={{ margin: 2, width: "40%" }}
+          endIcon={<ArrowForward />}
+        />
+      </Box>
+    </Drawer>
+  );
+}
+
 function MsoCharts() {
+  const yAxisValues = ["Value 1", "Value 2", "Value 3", "Value 4"];
+
+  const CustomYAxisTick = (props: { x: any; y: any; payload: any }) => {
+    const { x, y, payload } = props;
+    return (
+      <g transform={`translate(${x},${y})`}>
+        <text x={0} y={0} dy={16} textAnchor="end" fill="#666">
+          {payload.value}
+        </text>
+      </g>
+    );
+  };
   return (
     <>
-      <Grid container mt={1} spacing={2}>
+      <Grid container mt={0} spacing={2}>
         <Grid item xs={12} md={6}>
           <Box sx={styles.graphBox}>
             <Typography sx={styles.graphText}>
               A to S for Different Categories
             </Typography>
             <Box sx={styles.chartContainer}>
-              <ResponsiveContainer width="85%" height="85%">
+              <ResponsiveContainer width="90%" height="80%">
                 <BarChart
                   margin={{
                     top: 10,
                     right: 20,
                     bottom: 10,
-                    left: 20,
+                    left: 40,
                   }}
                   data={smallData}
                   layout="vertical"
                 >
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis type="number" />
-                  <YAxis dataKey="name" type="category" />
+                  <CartesianGrid strokeDasharray="1 1" />
+                  <XAxis type="number" dataKey="pv" />
+                  <YAxis type="category" domain={["dataMin", "dataMax"]}>
+                    <Label
+                      value="Category"
+                      offset={35}
+                      position="center"
+                      angle={-90}
+                    />
+                  </YAxis>
                   <Tooltip />
 
-                  <Bar dataKey="pv" fill="rgba(229, 113, 143, 1)" label={{position : "right"}} />
+                  <Bar
+                    dataKey="pv"
+                    fill="rgba(229, 113, 143, 1)"
+                    label={{ position: "right" }}
+                    barSize={20}
+                  />
                 </BarChart>
               </ResponsiveContainer>
             </Box>
@@ -206,48 +279,53 @@ function MsoCharts() {
         </Grid>
 
         <Grid item xs={12} md={6}>
-          <Box sx={[styles.graphBox, { padding: 0 }]}>
-            <TopRankingTable />
+          <Box sx={[styles.graphBox]}>
+            <Typography sx={styles.graphText}>
+              Spend Comparison Category
+            </Typography>
+            <Grid container spacing={2} pt={2}>
+              {smallCardData.map((data) => (
+                <Grid item md={4} sm={6} xs={12} key={data.productName}>
+                  <Cards {...data} key={data.actual} />
+                </Grid>
+              ))}
+            </Grid>
           </Box>
         </Grid>
       </Grid>
     </>
   );
-};
+}
 
-
-
-
-const BpIcon = styled('span')(({ theme }) => ({
-  borderRadius: '50%',
+const BpIcon = styled("span")(({ theme }) => ({
+  borderRadius: "50%",
   width: 20,
   height: 20,
   boxShadow:
-    theme.palette.mode === 'dark'
-      ? '0 0 0 1px rgb(16 22 26 / 40%)'
-      : 'inset 0 0 0 1px rgba(16,22,26,.2), inset 0 -1px 0 rgba(16,22,26,.1)',
-  'input:hover ~ &': {
-    backgroundColor: theme.palette.mode === 'dark' ? '#30404d' : '#ebf1f5',
-   
+    theme.palette.mode === "dark"
+      ? "0 0 0 1px rgb(16 22 26 / 40%)"
+      : "inset 0 0 0 1px rgba(16,22,26,.2), inset 0 -1px 0 rgba(16,22,26,.1)",
+  "input:hover ~ &": {
+    backgroundColor: theme.palette.mode === "dark" ? "#30404d" : "#ebf1f5",
   },
-  display : "flex",
-  justifyContent : "center",
-  alignItems : "center",
-
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
 }));
 
 const BpCheckedIcon = styled(BpIcon)({
-  backgroundColor: 'rgba(43, 82, 221, 1)',
-  backgroundImage: 'linear-gradient(180deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,0))',
-  '&:before': {
-    display: 'block',
+  backgroundColor: "rgba(43, 82, 221, 1)",
+  backgroundImage:
+    "linear-gradient(180deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,0))",
+  "&:before": {
+    display: "block",
     width: 15,
     height: 15,
-    backgroundImage: 'radial-gradient(#fff,#fff 28%,transparent 32%)',
+    backgroundImage: "radial-gradient(#fff,#fff 28%,transparent 32%)",
     content: '""',
   },
-  'input:hover ~ &': {
-    backgroundColor: '#106ba3',
+  "input:hover ~ &": {
+    backgroundColor: "#106ba3",
   },
 });
 
@@ -264,17 +342,15 @@ function BpRadio(props: RadioProps) {
   );
 }
 
-
 function MsoSpendComparisan() {
-  const [value, setValue] = React.useState('allocated');
+  const [value, setValue] = React.useState("allocated");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // console.log("Radio Selected Value", (event.target as HTMLInputElement).value);
     setValue((event.target as HTMLInputElement).value);
   };
 
   return (
-    <Box className="custom-container">
+    <Box className="custom-container" padding={2} mt={2}>
       <Grid container>
         <Grid item xs={6}>
           <Typography sx={styles.normalText}>
@@ -401,17 +477,13 @@ function MsoSpendComparisan() {
 
       <Grid container mt={3}>
         <Grid item xs={0.5}>
-          <Typography
-            sx={styles.rotateText}
-          >
+          <Typography sx={styles.rotateText}>
             <Typography sx={{ rotate: "270deg" }}>Display</Typography>
           </Typography>
         </Grid>
 
         <Grid item xs={5.5}>
-          <Box
-            sx={styles.smallBox}
-          >
+          <Box sx={styles.smallBox}>
             <Grid container>
               <Grid pl={2} pt={2} pb={2} item xs={1.5} sx={styles.percentText}>
                 12%
@@ -424,13 +496,13 @@ function MsoSpendComparisan() {
                   item
                   key={index}
                   xs={3.5}
-                  sx={
-                  { color: "rgba(0, 0, 0, 1)",
-                  fontWeight: 600,
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center" }
-                }
+                  sx={{
+                    color: "rgba(0, 0, 0, 1)",
+                    fontWeight: 600,
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
                 >
                   {data}
                 </Grid>
@@ -439,11 +511,7 @@ function MsoSpendComparisan() {
           </Box>
         </Grid>
 
-        <Grid
-          xs={0.5}
-          sx={styles.centerGrid}
-          item
-        >
+        <Grid xs={0.5} sx={styles.centerGrid} item>
           <Typography
             sx={{
               color: "rgba(6, 64, 136, 1)",
@@ -456,9 +524,7 @@ function MsoSpendComparisan() {
         </Grid>
 
         <Grid item xs={5.5}>
-          <Box
-            sx={styles.smallBox}
-          >
+          <Box sx={styles.smallBox}>
             <Grid container>
               <Grid pl={2} pt={2} pb={2} item xs={1.5} sx={styles.percentText}>
                 12%

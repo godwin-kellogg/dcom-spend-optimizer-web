@@ -60,3 +60,7 @@ export const rows: tableData[] = [
   createData('Gingerbread', 356, 16.0, 49, 3.9, 0, 0, 0, 0, 0, 0, 0, 0, 0),
   createData('Gingerbread', 356, 16.0, 49, 3.9, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 ];
+export const data = {
+  headingName : "Predicted Budget Reallocated Across Selected SKUs",
+  compareImg : "/assets/icons/cloud.png"
+}

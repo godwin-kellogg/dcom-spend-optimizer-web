@@ -1,29 +1,26 @@
-import React from "react";
+import CloseIcon from "@mui/icons-material/Close";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Box,
   Drawer,
+  IconButton,
   List,
   ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  IconButton,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
   Stack,
   Typography,
 } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import HomeIcon from "@mui/icons-material/Home";
-import HdrStrongIcon from "@mui/icons-material/HdrStrong";
-import BoltIcon from "@mui/icons-material/Bolt";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import { appRouters, path } from "constants/routes";
+import React from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AccordionData } from "../../@types/components";
 import "./CustomDrawer.css";
-import { appRouters, path } from "constants/routes";
-import { useNavigate } from "react-router-dom";
 
 export const CustomDrawer = ({ open, toggleDrawer }: any) => {
   return (
@@ -34,7 +31,6 @@ export const CustomDrawer = ({ open, toggleDrawer }: any) => {
       sx={{ zIndex: 1300 }}
     >
       {ListComponent(toggleDrawer)}
-      
     </Drawer>
   );
 };
@@ -42,87 +38,107 @@ export const CustomDrawer = ({ open, toggleDrawer }: any) => {
 const listData = [
   {
     panel: "panel1",
-    icon: <HdrStrongIcon />,
+    icon: "/assets/icons/tpo-expand.svg",
     title: "Trade Promo Optimiser",
-    content : [
+    content: [
       {
-      name : "Predictive View",
-      path : appRouters.tpoOptimiser
+        name: "Predictive View",
+        path: appRouters.tpoOptimiser,
       },
       {
-        name : "Descriptive View",
-        path : appRouters.tpoDashboard
+        name: "Descriptive View",
+        path: appRouters.tpoDashboard,
       },
-  ]
+    ],
   },
   {
     panel: "panel2",
-    icon: <BoltIcon />,
+    icon: "/assets/icons/mso-expand.svg",
     title: "Sales BB Optimiser",
-    content : [
+    content: [
       {
-        name : "Predictive View",
-        path : appRouters.msoPredictive,
+        name: "Predictive View",
+        path: appRouters.msoPredictive,
       },
       {
-        name : "Descriptive View",
-        path : appRouters.msoDescriptive,
+        name: "Descriptive View",
+        path: appRouters.msoDescriptive,
       },
       {
-        name : "Amazon PI",
-        path : appRouters.msoAmazonPI,
+        name: "Amazon PI",
+        path: appRouters.msoAmazonPI,
       },
-
-    ]
+    ],
   },
-]
+];
 
 const ListComponent = (toggleDrawer: (open: boolean) => () => void) => {
   const navigate = useNavigate();
-
   return (
     <Box sx={{ width: 350 }} role="presentation">
-    <IconButton className="closeIcon" onClick={toggleDrawer(false)}>
-      <CloseIcon />
-    </IconButton>
-
-    <List>
-      <ListItem onClick={()=>{navigate(path)}}>
-        <ListItemButton 
+      <IconButton
+        data-testid="close-icon"
+        className="closeIcon"
         onClick={toggleDrawer(false)}
-        >
-          <ListItemIcon>
-            <HomeIcon />
-          </ListItemIcon>
-          <ListItemText>Home</ListItemText>
-        </ListItemButton>
-      </ListItem>
+      >
+        <CloseIcon />
+      </IconButton>
 
-      {listData.map((data) => (
-        <ListItem key={data.title}>
-          <CustomAccordion {...data} toggleDrawer={toggleDrawer}  />
+      <List>
+        <ListItem
+          onClick={() => {
+            navigate(path);
+          }}
+        >
+          <ListItemButton
+            onClick={toggleDrawer(false)}
+            sx={{
+              ":hover": {
+                background: "none",
+                color: "blue",
+                transition: "filter 0.5s ease-in",
+              },
+            }}
+          >
+            <ListItemIcon sx={{ marginLeft: 3 }}>
+              <img src="/assets/icons/home.svg" />
+            </ListItemIcon>
+            <ListItemText className="home-text">Home</ListItemText>
+          </ListItemButton>
         </ListItem>
-      ))}
-    </List>
-  </Box>
-  )
+
+        {listData.map((data) => (
+          <ListItem key={data.title}>
+            <CustomAccordion {...data} toggleDrawer={toggleDrawer} />
+          </ListItem>
+        ))}
+      </List>
+    </Box>
+  );
 };
 
-const CustomAccordion = ({ icon, title, panel, toggleDrawer, content }: AccordionData) => {
+const CustomAccordion = ({
+  icon,
+  title,
+  panel,
+  toggleDrawer,
+  content,
+}: AccordionData) => {
   const [expanded, setExpanded] = React.useState<string | false>(false);
   const handleAccordionChange =
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
-      console.log(panel, event);
+      console.log(panel);
       setExpanded(isExpanded ? panel : false);
     };
-  const isExpanded = expanded === panel;
+  const location = useLocation();
+  const isExpanded =
+    content.some((data) => location.pathname === data.path) ||
+    expanded === panel;
   const navigation = useNavigate();
-  
-
 
   return (
     <Accordion
-      sx={{ boxShadow: "none", width: "100%" }}
+      sx={{ boxShadow: "none", width: "88%", marginLeft: isExpanded ? 2 : 0 }}
       expanded={isExpanded}
       onChange={handleAccordionChange(panel)}
       disableGutters
@@ -133,37 +149,38 @@ const CustomAccordion = ({ icon, title, panel, toggleDrawer, content }: Accordio
             className={isExpanded ? "listIconsExpended" : "listIconNormal"}
           />
         }
-        className={isExpanded ? "expandedAccordion" : "expandedAccordionNoraml"}
-        sx={{ margin: 0 }}
+        className={isExpanded ? "expandedAccordion" : "expandedAccordionNormal"}
       >
-        <ListItemIcon
-          className={isExpanded ? "listIconsExpended" : "listIconNormal"}
-        >
-          {icon}
-        </ListItemIcon>
-        <ListItemText>{title}</ListItemText>
+        <ListItemText sx={{ marginLeft: 3 }}>
+          <img src={icon} width="16px" height="16px" /> &nbsp; {title}
+        </ListItemText>
       </AccordionSummary>
-
       <AccordionDetails>
         <Stack spacing={2} direction="column" useFlexGap>
           {content.map((data: any) => (
-            <Typography 
-              className="listTypography" 
-              onClick={()=>{
-                navigation(data.path) 
+            <Box
+              onClick={() => {
+                navigation(data.path);
               }}
-              
               key={data.name}
+              className="listTypography"
             >
-              <Typography onClick={toggleDrawer(false)} className="listItems" component="span">
+              <Typography
+                className={
+                  data.path === location.pathname
+                    ? "listItems-active"
+                    : "listItems"
+                }
+                onClick={toggleDrawer(false)}
+                ml={4}
+              >
                 {data.name}
               </Typography>
-              <IconButton disableRipple>
+              <IconButton>
                 <KeyboardArrowRightIcon className="listIconNormal" />
               </IconButton>
-            </Typography>
+            </Box>
           ))}
-
         </Stack>
       </AccordionDetails>
     </Accordion>

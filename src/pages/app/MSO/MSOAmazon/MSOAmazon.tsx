@@ -18,18 +18,21 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Typography,
-  styled
+  Typography
 } from "@mui/material";
+import { DropDown } from "components/DropdownComponent/DropdownComponent";
 import { Item } from "components/ItemPaper/ItemPaper";
 import MSButton from "components/MSButton/MSButton";
+import { TopRankingTable } from "components/TopRankingKeywords/TopRankingTable";
 import { CalendarComponent } from "components/calendar/calendar";
-import DropDown from "components/dropDownSelect/dropDown";
-import { Filter } from "components/sidebar/FilterSidebar";
+import { DrawerHeader, Filter } from "components/sidebar/FilterSidebar";
 import React from "react";
 import {
+  Bar,
+  BarChart,
   CartesianGrid,
   Cell,
+  Legend,
   Line,
   LineChart,
   Pie,
@@ -41,15 +44,21 @@ import {
 } from "recharts";
 import { ComptetiorCardData } from "../../../../@types/components";
 import "./MSOAmazon.css";
-import { ComptitionData, ProductSearch, TopCategories, filterCategory } from "./MSOAmazon.data";
+import {
+  AgeData,
+  CategorySearchData,
+  ComptitionData,
+  GenderData,
+  ProductRankingData,
+  ProductSearch,
+  TableHeadData,
+  TopCategories,
+  filterCategory,
+  rows
+} from "./MSOAmazon.data";
+import { smallCardData } from "../MSODescriptive/MSODashboard.data";
+import { Cards } from "components/MSOSmallCards/MSOSmallCards";
 
-const DrawerHeader = styled("div")(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  padding: theme.spacing(0, 1),
-  ...theme.mixins.toolbar,
-  justifyContent: "space-between",
-}));
 
 const MSOAmazon = () => {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
@@ -89,7 +98,7 @@ const MSOAmazon = () => {
         md={drawerOpen ? 9.5 : 11.5}
         xl={drawerOpen ? 9.5 : 11.5}
       >
-        <RightConatiner value={isValue} />
+        <RightConatiner />
       </Grid>
     </Grid>
   );
@@ -113,7 +122,7 @@ function FilterSidebar({ open, onClose, onFilterDataChange }: any) {
 
   return (
     <Drawer
-      className="custom-drawer "
+      className="custom-drawer"
       variant="persistent"
       anchor="left"
       open={open}
@@ -189,14 +198,33 @@ function FilterSidebar({ open, onClose, onFilterDataChange }: any) {
   );
 }
 
-const data = [
-  { name: "Group A", value: 400 },
-  { name: "Group B", value: 300 },
-  { name: "Group C", value: 300 },
-  { name: "Group D", value: 200 },
-];
+const RightConatiner = () => {
+  return (
+    <>
+      <TopContainer />
+      <MiddleContainer />
 
-const COLORS = ["#8884d8", "#82ca9d", "#ffc658", "#ff7300"];
+      
+      <BottomContainer />
+    </>
+  );
+};
+
+const renderColorfulLegendText = (value: string) => {
+  return (
+    <span
+      style={{
+        color: "#596579",
+        fontWeight: 500,
+        paddingRight: "10rem",
+        paddingTop: "1rem",
+        paddingBottom: "1rem",
+      }}
+    >
+      {value}
+    </span>
+  );
+};
 
 const renderCustomizedLabel = ({
   cx,
@@ -205,32 +233,23 @@ const renderCustomizedLabel = ({
   innerRadius,
   outerRadius,
   percent,
-  index,
 }: any) => {
   const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
   const x = cx + radius * Math.cos(-midAngle * (Math.PI / 180));
   const y = cy + radius * Math.sin(-midAngle * (Math.PI / 180));
-
   return (
     <text
       x={x}
       y={y}
-      fill="white"
+      fill="rgba(238, 255, 233, 1)"
       textAnchor="middle"
       dominantBaseline="central"
+      fontWeight={600}
+      letterSpacing="0.03125rem"
+      fontSize="1rem"
     >
-      {`${(percent * 100).toFixed(0)}%`}
+      {`${(percent * 100).toFixed(2)}%`}
     </text>
-  );
-};
-
-const RightConatiner = ({ value }: any) => {
-  return (
-    <>
-      <TopContainer />
-      <MiddleContainer />
-      <BottomContainer />
-    </>
   );
 };
 
@@ -241,15 +260,7 @@ const TopContainer = () => {
         {TopCategories.map((category) => (
           <Grid item md={4} sm={12} xs={12}>
             <Item padding="0" key={category.category}>
-              <Typography
-                m={2}
-                sx={{
-                  color: "rgba(32, 32, 32, 1)",
-                  fontSize: "1rem",
-                  fontWeight: 600,
-                  letterSpacing: "0.03125rem",
-                }}
-              >
+              <Typography m={2} className="filterText">
                 {category.category}
               </Typography>
               <Divider />
@@ -266,36 +277,33 @@ const TopContainer = () => {
 
         <Grid item md={4} sm={12} xs={12}>
           <Item padding="0">
-            <Typography
-              m={2}
-              sx={{
-                color: "rgba(32, 32, 32, 1)",
-                fontSize: "1rem",
-                fontWeight: 600,
-                letterSpacing: "0.03125rem",
-              }}
-            >
+            <Typography m={2} className="filterText">
               Gender Distribution
             </Typography>
             <Divider />
-            <Box sx={{ width: "100%", height: "100%" }}>
+
+            <Box sx={{ width: "100%", height: "auto" }}>
               <ResponsiveContainer width="100%" height={255}>
                 <PieChart>
+                  <Legend
+                    iconType="square"
+                    layout="vertical"
+                    verticalAlign="middle"
+                    iconSize={15}
+                    formatter={renderColorfulLegendText}
+                    align="right"
+                  />
                   <Pie
-                    data={data}
-                    cx="50%"
-                    cy="50%"
-                    labelLine={false}
-                    label={renderCustomizedLabel}
+                    data={GenderData}
                     outerRadius={80}
                     fill="#8884d8"
+                    paddingAngle={0}
                     dataKey="value"
+                    labelLine={false}
+                    label={renderCustomizedLabel}
                   >
-                    {data.map((entry, index) => (
-                      <Cell
-                        key={`cell-${index}`}
-                        fill={COLORS[index % COLORS.length]}
-                      />
+                    {GenderData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
                     ))}
                   </Pie>
                 </PieChart>
@@ -308,22 +316,13 @@ const TopContainer = () => {
   );
 };
 
-const datas = [
-  { name: "Page A", uv: 4000 },
-  { name: "Page B", uv: 3000 },
-  { name: "Page C", uv: 2000 },
-  { name: "Page D" },
-  { name: "Page E", uv: 1890 },
-  { name: "Page F", uv: 2390 },
-  { name: "Page G", uv: 3490 },
-];
-
 const MiddleContainer = () => {
   return (
-    <Box mt={2} mb={2}>
+    <>
+      <Box mt={2} mb={2}>
       <Grid container spacing={2}>
-        <Grid item sm={6} xs={12}>
-          <Item padding="1rem" >
+        <Grid item sm={6} xs={12} sx={{height : "45vh"}}>
+          <Item padding="1rem" className="box-shadow-custom">
             <Typography
               sx={{
                 display: "flex",
@@ -331,14 +330,7 @@ const MiddleContainer = () => {
                 alignItems: "center",
               }}
             >
-              <Typography
-                sx={{
-                  color: "rgba(32, 32, 32, 1)",
-                  fontSize: "1rem",
-                  fontWeight: 600,
-                  letterSpacing: "0.03125rem",
-                }}
-              >
+              <Typography className="filterText">
                 Product Search Ranking
               </Typography>
               <Typography>
@@ -356,7 +348,7 @@ const MiddleContainer = () => {
                 <LineChart
                   width={500}
                   height={200}
-                  data={datas}
+                  data={ProductRankingData}
                   margin={{
                     top: 10,
                     right: 30,
@@ -364,16 +356,16 @@ const MiddleContainer = () => {
                     bottom: 0,
                   }}
                 >
-                  <CartesianGrid strokeDasharray="3 3" />
+                  <CartesianGrid strokeDasharray="1 1" />
                   <XAxis dataKey="name" />
                   <YAxis />
                   <Tooltip />
                   <Line
-                    connectNulls
                     type="monotone"
                     dataKey="uv"
-                    stroke="#8884d8"
-                    fill="#8884d8"
+                    stroke="rgba(229, 113, 143, 1)"
+                    strokeWidth={2}
+                    dot={{ r: 5 }}
                   />
                 </LineChart>
               </ResponsiveContainer>
@@ -381,7 +373,7 @@ const MiddleContainer = () => {
           </Item>
         </Grid>
         <Grid item sm={6} xs={12}>
-          <Item padding="1rem">
+          <Item padding="1rem" className="box-shadow-custom">
             <Typography
               sx={{
                 display: "flex",
@@ -389,16 +381,7 @@ const MiddleContainer = () => {
                 alignItems: "center",
               }}
             >
-              <Typography
-                sx={{
-                  color: "rgba(32, 32, 32, 1)",
-                  fontSize: "1rem",
-                  fontWeight: 600,
-                  letterSpacing: "0.03125rem",
-                }}
-              >
-                Age Distribution
-              </Typography>
+              <Typography className="filterText">Age Distribution</Typography>
               <Typography>
                 <DropDown
                   initialValue={ProductSearch.initialVal}
@@ -411,29 +394,19 @@ const MiddleContainer = () => {
               sx={{ width: "100%", display: "flex", justifyContent: "center" }}
             >
               <ResponsiveContainer width="90%" height={320}>
-                <LineChart
-                  width={500}
-                  height={200}
-                  data={datas}
-                  margin={{
-                    top: 10,
-                    right: 30,
-                    left: 0,
-                    bottom: 0,
-                  }}
-                >
-                  <CartesianGrid strokeDasharray="3 3" />
+                <BarChart data={AgeData}>
+                  <CartesianGrid strokeDasharray="1 1" />
                   <XAxis dataKey="name" />
-                  <YAxis />
+                  <YAxis
+                    tickFormatter={(value, index) => AgeData[index].yAxis}
+                  ></YAxis>
                   <Tooltip />
-                  <Line
-                    connectNulls
-                    type="monotone"
-                    dataKey="uv"
-                    stroke="#8884d8"
-                    fill="#8884d8"
+                  <Bar
+                    barSize={30}
+                    dataKey="value"
+                    fill="rgba(96, 125, 230, 1)"
                   />
-                </LineChart>
+                </BarChart>
               </ResponsiveContainer>
             </Box>
           </Item>
@@ -441,15 +414,8 @@ const MiddleContainer = () => {
       </Grid>
       <Grid container spacing={2} mt={1}>
         <Grid item sm={6} xs={12}>
-          <Item padding="1rem">
-            <Typography
-              sx={{
-                color: "rgba(32, 32, 32, 1)",
-                fontSize: "1rem",
-                fontWeight: 600,
-                letterSpacing: "0.03125rem",
-              }}
-            >
+          <Item padding="1rem" className="box-shadow-custom">
+            <Typography className="filterText">
               Category Search Trend And Brand Recall
             </Typography>
             <Box
@@ -457,196 +423,134 @@ const MiddleContainer = () => {
               sx={{ width: "100%", display: "flex", justifyContent: "center" }}
             >
               <ResponsiveContainer width="90%" height={320}>
-                <LineChart
-                  width={500}
-                  height={200}
-                  data={datas}
-                  margin={{
-                    top: 10,
-                    right: 30,
-                    left: 0,
-                    bottom: 0,
-                  }}
-                >
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip />
-                  <Line
-                    connectNulls
-                    type="monotone"
-                    dataKey="uv"
-                    stroke="#8884d8"
-                    fill="#8884d8"
+                <PieChart>
+                  <Legend
+                    iconType="square"
+                    layout="vertical"
+                    verticalAlign="middle"
+                    iconSize={15}
+                    formatter={renderColorfulLegendText}
+                    align="right"
                   />
-                </LineChart>
+                  <Pie
+                    data={CategorySearchData}
+                    outerRadius={100}
+                    fill="#8884d8"
+                    paddingAngle={0}
+                    dataKey="value"
+                    labelLine={false}
+                    label={renderCustomizedLabel}
+                  >
+                    {CategorySearchData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                </PieChart>
               </ResponsiveContainer>
             </Box>
           </Item>
         </Grid>
         <Grid item sm={6} xs={12}>
-          <Item padding="1.8rem">
-            <Typography
-              sx={{
-                color: "rgba(32, 32, 32, 1)",
-                fontSize: "1rem",
-                fontWeight: 600,
-                letterSpacing: "0.03125rem",
-              }}
-            >
-              Other brand products viewed by your customers
-            </Typography>
-            <Box
-              mt={4}
-              sx={{ width: "100%", display: "flex", justifyContent: "center" }}
-            >
-              <Grid container spacing={2}>
-                  {
-                   ComptitionData.map((data, index)=>
-                    <Grid item xs={4}>
-                      <ComptetiorCard {...data} />
-                    </Grid>
-                   )
-                  }
-              </Grid>
-            </Box>
+          <Item padding="0" >
+            <TopRankingTable />
           </Item>
         </Grid>
       </Grid>
     </Box>
+    <Box className="custom-container" mt={2} padding={2}>
+    <Typography
+      sx={{ fontWeight: 600, color: "rgba(32, 32, 32, 1)", mb: 1 }}
+    >
+      Other brand products viewed by your customers
+    </Typography>
+    <Grid container spacing={2}>
+      {ComptitionData.map((data) => (
+        <Grid item xs={3}>
+          <ComptetiorCard {...data} />
+        </Grid>
+      ))}
+    </Grid>
+  </Box>
+    </>
   );
 };
 
-function createData(
-  name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number,
-) {
-  return { name, calories, fat, carbs, protein };
-}
 
-const rows = [
-  createData('Your Brand', 159, 6.0, 24, 4.0),
-  createData('Competitor', 237, 9.0, 37, 4.3),
-  createData('Generic', 262, 16.0, 24, 6.0),
-  createData('All Keywords', 305, 3.7, 67, 4.3),
-  
-];
-const BottomContainer = ()=>{
+
+const BottomContainer = () => {
   return (
-    <Item padding="0">
-      <Typography 
-      sx={{
-          color: "rgba(32, 32, 32, 1)",
-          fontSize: "1rem",
-          fontWeight: 600,
-          letterSpacing: "0.03125rem",
-          margin :2
-      }}>Search Advertising Performance Metrics & Benchmarks</Typography>
-      <TableContainer>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+    <Item padding="0" sx={{ marginBottom: 4 }}>
+      <Typography className="filterText" m={2}>
+        Search Advertising Performance Metrics & Benchmarks
+      </Typography>
+
+      <TableContainer className="box-shadow-custom table-scroll-bar">
+        <Table>
           <TableHead>
             <TableRow>
-              <TableCell className="table-header-text" rowSpan={2} sx={{border :1, borderColor : "rgba(212, 212, 212, 1)"}} align="center">Keyword Segments</TableCell>
-              <TableCell className="table-header-text" sx={{border :1, borderColor : "rgba(212, 212, 212, 1)"}}></TableCell>
-              <TableCell className="table-header-text" colSpan={6} sx={{border :1, borderColor : "rgba(212, 212, 212, 1)"}} align="center">27 Apr</TableCell>
-              <TableCell className="table-header-text" colSpan={6} sx={{border :1, borderColor : "rgba(212, 212, 212, 1)"}} align="center">28 Apr</TableCell>
+              <TableCell
+                className="table-header-text sticky-table-cell"
+                rowSpan={2}
+              >
+                Keyword Segments
+              </TableCell>
+              {TableHeadData.dates.map((date, dataIndex) => (
+                <TableCell
+                  className={`table-header-text ${
+                    dataIndex % 2 === 0 ? "grey-table" : "white-table"
+                  }`}
+                  colSpan={6}
+                  sx={{
+                    minWidth: 640,
+                  }}
+                >
+                  {date}
+                </TableCell>
+              ))}
             </TableRow>
             <TableRow>
-              <TableCell className="table-header-text" sx={{border :1, borderColor : "rgba(212, 212, 212, 1)"}} align="center">ACoS</TableCell>
-              <TableCell className="table-header-text" sx={{border :1, borderColor : "rgba(212, 212, 212, 1)"}} align="center">Organic SOV</TableCell>
-              <TableCell className="table-header-text" sx={{border :1, borderColor : "rgba(212, 212, 212, 1)"}} align="center">Adv SOV</TableCell>
-              <TableCell className="table-header-text" sx={{border :1, borderColor : "rgba(212, 212, 212, 1)"}} align="center">CTR</TableCell>
-              <TableCell className="table-header-text" sx={{border :1, borderColor : "rgba(212, 212, 212, 1)"}} align="center">CPC</TableCell>
-              <TableCell className="table-header-text" sx={{border :1, borderColor : "rgba(212, 212, 212, 1)"}} align="center">Conv</TableCell>
-              <TableCell className="table-header-text" sx={{border :1, borderColor : "rgba(212, 212, 212, 1)"}} align="center">ACoS</TableCell>
-              <TableCell className="table-header-text" sx={{border :1, borderColor : "rgba(212, 212, 212, 1)"}} align="center">Organic SOV</TableCell>
-              <TableCell className="table-header-text" sx={{border :1, borderColor : "rgba(212, 212, 212, 1)"}} align="center">Adv SOV</TableCell>
-              <TableCell className="table-header-text" sx={{border :1, borderColor : "rgba(212, 212, 212, 1)"}} align="center">CTR</TableCell>
-              <TableCell className="table-header-text" sx={{border :1, borderColor : "rgba(212, 212, 212, 1)"}} align="center">CPC</TableCell>
-              <TableCell className="table-header-text" sx={{border :1, borderColor : "rgba(212, 212, 212, 1)"}} align="center">Conv</TableCell>
-              <TableCell className="table-header-text" sx={{border :1, borderColor : "rgba(212, 212, 212, 1)"}} align="center">ACoS</TableCell>
+              {TableHeadData.dates.map((dat, dataIndex) =>
+                TableHeadData.fieldName.map((val) => (
+                  <TableCell
+                    className={`table-header-text ${
+                      dataIndex % 2 === 0 ? "grey-table" : "white-table"
+                    }`}
+                  >
+                    {val}
+                  </TableCell>
+                ))
+              )}
             </TableRow>
           </TableHead>
+
           <TableBody>
-            {rows.map((row) => (
-              <TableRow
-                key={row.name}
-                sx={{ '&:last-child td, &:last-child th': { borderBottom: 0 } }}
-              >
-                <TableCell sx={{border :1, borderColor : "rgba(212, 212, 212, 1)"}} align="center">
-                  {row.name}
-                </TableCell>
-                <TableCell sx={{border :1, borderColor : "rgba(212, 212, 212, 1)"}} align="center">{row.calories}</TableCell>
-                <TableCell sx={{border :1, borderColor : "rgba(212, 212, 212, 1)"}} align="center">{row.fat}</TableCell>
-                <TableCell sx={{border :1, borderColor : "rgba(212, 212, 212, 1)"}} align="center">{row.carbs}</TableCell>
-                <TableCell sx={{border :1, borderColor : "rgba(212, 212, 212, 1)"}} align="center">{row.protein}</TableCell>
-                <TableCell sx={{border :1, borderColor : "rgba(212, 212, 212, 1)"}} align="center">{row.fat}</TableCell>
-                <TableCell sx={{border :1, borderColor : "rgba(212, 212, 212, 1)"}} align="center">{row.carbs}</TableCell>
-                <TableCell sx={{border :1, borderColor : "rgba(212, 212, 212, 1)"}} align="center">{row.protein}</TableCell>
-                <TableCell sx={{border :1, borderColor : "rgba(212, 212, 212, 1)"}} align="center">{row.fat}</TableCell>
-                <TableCell sx={{border :1, borderColor : "rgba(212, 212, 212, 1)"}} align="center">{row.carbs}</TableCell>
-                <TableCell sx={{border :1, borderColor : "rgba(212, 212, 212, 1)"}} align="center">{row.protein}</TableCell>
-                <TableCell sx={{border :1, borderColor : "rgba(212, 212, 212, 1)"}} align="center">{row.fat}</TableCell>
-                <TableCell sx={{border :1, borderColor : "rgba(212, 212, 212, 1)"}} align="center">{row.carbs}</TableCell>
-                <TableCell sx={{border :1, borderColor : "rgba(212, 212, 212, 1)"}} align="center">{row.protein}</TableCell>
+            {TableHeadData.keywordSegment.map((val) => (
+              <TableRow>
+                <TableCell>{val}</TableCell>
+                {rows.YourBrand.map((value) => (
+                  <TableCell>{value}</TableCell>
+                ))}
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
     </Item>
-  )
-}
+  );
+};
 
-
-
-const ComptetiorCard = ({
-  id,imgSrc, textData
-}:ComptetiorCardData)=>{
+const ComptetiorCard = ({ id, imgSrc, textData }: ComptetiorCardData) => {
   return (
     <Item>
-        <Grid container>
-          <Grid item xs={4}>
-            <Typography sx={{
-              height : "40px",
-              width : "40px",
-              backgroundColor : "rgba(251, 251, 252, 1)",
-              display : "flex",
-              justifyContent : "center",
-              alignItems : "center"
-            }}
-
-            > 
-                {id}
-            </Typography>
-          </Grid>
-          <Grid item xs={8} pl={2}>
-            <img
-              width={75}
-              height={75}
-              src={imgSrc}
-              alt=""
-            />
-          </Grid>
-          <Typography
-            sx={{
-              overflow:"hidden",
-              color : "rgba(32, 32, 32, 1)",
-              textOverflow : "ellipsis",
-              whiteSpace : "nowrap",
-              fontSize : "0.875rem",
-              fontWeight : 400,
-              lineHeight : "1.5rem",
-              letterSpacing : "0.03125rem",
-              marginTop : 2
-              }}
-          >
-            {textData}
-          </Typography>
+      <Grid container>
+        <Grid item xs={4}>
+          <Typography className="comptetior-card-id">{id}</Typography>
         </Grid>
+        <Grid item xs={8} pl={2}>
+          <img width={75} height={75} src={imgSrc} alt={textData} />
+        </Grid>
+        <Typography className="comptetior-card-text">{textData}</Typography>
+      </Grid>
     </Item>
-  )
-}
+  );
+};

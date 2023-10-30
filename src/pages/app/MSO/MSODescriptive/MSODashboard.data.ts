@@ -75,7 +75,7 @@ export const CardData = [
           },
           {
               lg:6,
-              header : "-",
+              header : "42%",
               subHeader : "Conversion",
               leftAction: "Delta",
               rightAction : "0.65L",
@@ -130,26 +130,31 @@ export const data = [
 export const smallData = [
 {
   "name": "Muesli",
+  "value" : 0,
   "uv": 4000,
   "pv": 2400
 },
 {
   "name": "Cornflakes",
+  "value" : 1,
   "uv": 3000,
   "pv": 1398
 },
 {
   "name": "Oats",
+  "value" : 2,
   "uv": 2000,
   "pv": 2800
 },
 {
   "name": "Chocos",
+  "value" : 3,
   "uv": 2780,
   "pv": 3908
 },
 {
   "name": "Granola",
+  "value" : 4,
   "uv": 1890,
   "pv": 4800
 }
@@ -240,7 +245,6 @@ export const SpendData = [
 
 
 export const DisplayData = [
- 
   "Core - 50%",
   "Growth - 20%",
   "Adjacent - 30%",

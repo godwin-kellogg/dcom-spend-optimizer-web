@@ -1,18 +1,17 @@
 import {
   Box,
-  Typography,
   Grid,
   Stack,
-  IconButton
+  Typography
 } from "@mui/material";
-import { styles } from "./tpoOptimiser.styles";
-import {TPOOptimiserCard} from "components/OptimiserCard/OptimiserCardComponent";
-import { cardDetails, dropDown, TopCardData } from "./cardDetails";
-import { useNavigate } from "react-router-dom";
-import { appRouters } from "constants/routes";
-import { LinearProgressComponent } from "components/linearProgress/linearProgress";
 import { Item } from "components/ItemPaper/ItemPaper";
-import DropDown from "components/dropDownSelect/dropDown";
+import { TPOOptimiserCards } from "components/OptimiserCard/OptimiserCardComponent";
+import {DropDown} from "components/DropdownComponent/DropdownComponent";
+import { LinearProgressComponent } from "components/linearProgress/linearProgress";
+import { appRouters } from "constants/routes";
+import { useNavigate } from "react-router-dom";
+import { TopCardData, cardDetails, dropDown } from "./cardDetails";
+import { styles } from "./tpoOptimiser.styles";
 
 
 
@@ -50,7 +49,7 @@ const TPOOptimiser = () => {
               sm={6}
               xs={12}
             >
-              <TPOOptimiserCard
+              <TPOOptimiserCards
                 cardTitle={data.month}
                 titleChip={data.chipName}
                 titleChipColor={data.styles}
@@ -62,7 +61,7 @@ const TPOOptimiser = () => {
                   headerClick(data.isData, index)
                 }}
                 onClickButton={()=>{
-                  navigation(appRouters.tpoPredction + data.month)
+                  navigation(appRouters.tpoAddPredction + data.month)
                 }}
                 />
             </Grid>
@@ -82,7 +81,7 @@ const PromoSpendCard = ()=>{
          <Grid container spacing={2} mt={1}>
           {
             
-            TopCardData.map((data:any)=>
+            TopCardData.map((data)=>
               (
             <Grid 
               key={data.title} 
@@ -99,7 +98,7 @@ const PromoSpendCard = ()=>{
                   sm={6} 
                   xs={12}
                 >
-                  <img src="/assets/icons/layers.svg" alt="Crunch Lab" />
+                  <img src={data.img} alt="Crunch Lab" />
                   <Typography component="span" sx={styles.promoText}>
                     {data.title}
                   </Typography>

@@ -1,6 +1,6 @@
 export const styles = {
     dropDown : {
-        minWidth: "100%",
+        width: "100%",
         mt : 1
     },
     text : {
