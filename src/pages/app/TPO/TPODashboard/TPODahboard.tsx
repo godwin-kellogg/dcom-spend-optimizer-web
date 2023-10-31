@@ -13,6 +13,7 @@ import {
   ListItem,
   ListItemText,
   Typography,
+  LinearProgress
 } from "@mui/material";
 import { Item } from "components/ItemPaper/ItemPaper";
 import MSButton from "components/MSButton/MSButton";
@@ -22,7 +23,7 @@ import {DropDown} from "components/DropdownComponent/DropdownComponent";
 import { Filter, DrawerHeader } from "components/sidebar/FilterSidebar";
 import React from "react";
 import "./TPODashboard.css";
-import { CardData, ChangedCardData } from "./TPODashboardData";
+import { CardData, ChangedCardData, filterCategory } from "./TPODashboardData";
 import TPODashboardGraph from "./TPOGraphs/TPODashboardGraph";
 import { data, dataChanged } from "./TPOGraphs/chartData";
 import { filterApi } from "api/tpo.api";
@@ -35,20 +36,6 @@ const TPODashboard = () => {
     setDrawerOpen(!drawerOpen);
   };
 
-  const [category, setCategory] = React.useState<any>();
-
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await filterApi();
-        setCategory(response.result);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
   return (
     <Grid container sx={{ ml: -4 }}>
       <Grid item>
@@ -59,7 +46,6 @@ const TPODashboard = () => {
             onFilterDataChange={() => {
               setValue(!isValue);
             }}
-            data={category}
           />
         ) : (
           <Filter handleFilterButtonClick={handleFilterButtonClick} />
@@ -113,8 +99,10 @@ const RightConatiner = ({ value }: any) => {
   );
 };
 
-function FilterSidebar({ open, onClose, onFilterDataChange, data }: any) {
-  console.log("data got", data);
+function FilterSidebar({ open, onClose, onFilterDataChange }: any) {
+  const [category, setCategory] = React.useState<any>(filterCategory);
+  const [showProgress, setProgress] = React.useState<boolean>(true);
+  const [intialVal] = React.useState<string>('CHOCO FILLS');
 
   function applyFilters() {
     onFilterDataChange("changed");
@@ -128,6 +116,23 @@ function FilterSidebar({ open, onClose, onFilterDataChange, data }: any) {
   const onChangeMethod = (type: string, value: any) => {
     console.log("Data Chabge", value.$d, type);
   };
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await filterApi();
+        if(response){
+        const data = await response?.json();
+        setCategory(data.result);
+        setProgress(response?.ok ? false : true);
+        }else{setCategory(filterCategory)}
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <Drawer
@@ -152,6 +157,13 @@ function FilterSidebar({ open, onClose, onFilterDataChange, data }: any) {
         </IconButton>
       </DrawerHeader>
       <Divider />
+      {
+        showProgress ? <Box sx={{ width: '100%', color : "blue" }} color="seagreen">
+        <LinearProgress />
+        </Box> : 
+        ""
+      }
+      
 
       <List>
         <ListItem>
@@ -159,8 +171,8 @@ function FilterSidebar({ open, onClose, onFilterDataChange, data }: any) {
             <Typography className="titleText">Category</Typography>
             <Typography>
               <DropDown
-                initialValue={data.categories[0]}
-                menuItem={data.categories}
+                initialValue={`${intialVal}`}
+                menuItem={category.categories}
                 onChange={(value) => handleDropDownChange("Category", value)}
               />
             </Typography>
@@ -171,8 +183,8 @@ function FilterSidebar({ open, onClose, onFilterDataChange, data }: any) {
             <Typography className="titleText">SKUs</Typography>
             <Typography sx={{ width: "100%" }}>
               <DropDown
-                initialValue={data.skus[0]}
-                menuItem={data.skus}
+                initialValue={`${category.skus[0][0]}`}
+                menuItem={category.skus}
                 onChange={(value) => handleDropDownChange("SKUs", value)}
               />
             </Typography>
@@ -183,8 +195,8 @@ function FilterSidebar({ open, onClose, onFilterDataChange, data }: any) {
             <Typography className="titleText">Promotion</Typography>
             <Typography>
               <DropDown
-                initialValue={data.promotions[0]}
-                menuItem={data.promotions}
+                initialValue={`B01N1PCX5G,SH34`}
+                menuItem={category.promotions}
                 onChange={(value) => handleDropDownChange("Promotion", value)}
               />
             </Typography>
@@ -204,6 +216,7 @@ function FilterSidebar({ open, onClose, onFilterDataChange, data }: any) {
                   onDateSelect={(value: any) => {
                     onChangeMethod("From", value);
                   }}
+                  timeframe={category.timeframe}
                 />
               </Typography>
             </ListItem>
@@ -217,6 +230,7 @@ function FilterSidebar({ open, onClose, onFilterDataChange, data }: any) {
                   onDateSelect={(value: any) => {
                     onChangeMethod("To", value);
                   }}
+                  // timeframe={category.timeframe}
                 />
               </Typography>
             </ListItem>

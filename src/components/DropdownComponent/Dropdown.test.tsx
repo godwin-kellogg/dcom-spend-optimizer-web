@@ -10,7 +10,7 @@ describe("Dropdown component", ()=>{
     });
     
     it("updates the selected value when an option is selected", ()=>{
-        const onChange = jest.fn();
+        // const onChange = jest.fn();
         render(<DropDown initialValue={initialValue} menuItem={menuItem} onChange={()=>{}} />);
         const select = screen.getByTestId("dropdown-select");
         fireEvent.mouseDown(select);

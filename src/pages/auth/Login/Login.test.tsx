@@ -1,12 +1,9 @@
 import { render, screen } from "@testing-library/react";
-import Login from ".";
-import { BrowserRouter } from "react-router-dom";
-import userEvent from "@testing-library/user-event";
-import { path } from "../../../constants/routes";
 import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
 import { store } from "redux/store/store";
+import Login from ".";
 
-import { authData } from "redux/reducers/auth.reducer";
 
 const mockedUsedNavigate = jest.fn();
 jest.mock("react-router-dom", () => ({

@@ -14,7 +14,7 @@ describe("Calendar Component", ()=>{
     });
 
     it('disables dates correctly based on isFrom prop', () => {
-        const { getByLabelText, queryByText } = render(<CalendarComponent isFrom={true} />);
+        const { queryByText } = render(<CalendarComponent isFrom={true} />);
         expect(queryByText('2')).not.toBeInTheDocument();
       });
 });

@@ -5,9 +5,9 @@ import { styles } from "./DropdownComponent.styles";
 import { DropdownProps } from "../../@types/components";
 
 export const DropDown = ({ initialValue, menuItem, onChange }: DropdownProps) => {
-  const [value, setValue] = React.useState(initialValue);
+  const [value, setValue] = React.useState<string>(initialValue);
   const handleChange = (event: any) => {
-    let selectedVal: any = event.target.value;
+    let selectedVal:string = event.target.value;
     setValue(selectedVal);
     if (onChange) onChange(selectedVal);
   };
@@ -24,9 +24,9 @@ export const DropDown = ({ initialValue, menuItem, onChange }: DropdownProps) =>
         }}
         data-testid="dropdown-select"
       >
-        {menuItem.map((value: any, index: number) => (
+        {menuItem.map((value: string, index: number) => (
           <MenuItem sx={styles.text} value={value} key={index} divider={true}>
-            {value}
+            {`${value}`.slice(0, 35)} 
           </MenuItem>
         ))}
       </Select>

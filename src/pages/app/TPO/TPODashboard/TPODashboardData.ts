@@ -193,41 +193,14 @@ export const ChangedCardData = [
 
 
 export const filterCategory = {
-    initialVal : "All Categories",
-    Category : [
-        "All Categories",
-        "Corn Flakes",
-        "Granola",
-        "Muesli",
-        "Oats",
-        "Chocos"
-    ]
+    categories : [
+        "Loading...",
+    ],
+    skus : [
+      "Loading...",
+  ],
+  promotions : [
+    "Loading...",
+]
 };
-
-
-export const filterSKUs = {
-    initialVal : "Select SKUs",
-    Category : [
-        "Select SKUs",
-        "Muesli 750g(FN60)",
-        "Muesli 500g(FN34)",
-        "Muesli 250g(FN14)",
-        "Cornflakes 875g(CF60)",
-        "Cornflakes 475g(CF56)",
-        "Cornflakes 650g(AC56)",
-        "Oats 1500g(HH44)",
-        'Oats 2000g(HH56)'
-    ]
-};
-
-export const filterPromotion = {
-    initialVal : "All Promotion",
-    Category : [
-        "All Promotion",
-        "BOGO",
-        "10% off",
-        "5% off",
-    ]
-};
-
 

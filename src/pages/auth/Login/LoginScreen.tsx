@@ -15,7 +15,7 @@ import { LoginScreenProps } from "../../../@types/components";
 import { logInScreenData } from "../../../constants/screensData";
 import { styles } from "./LoginScreen.styles";
 
-const LoginScreen = ({ onClickLogin }: LoginScreenProps) => {
+const LoginScreen = ({ onClickLogin, onTempRedirect }: LoginScreenProps) => {
   return (
     <Box
       sx={styles.container}
@@ -64,6 +64,9 @@ const LoginScreen = ({ onClickLogin }: LoginScreenProps) => {
             />
             {logInScreenData.button.title}
           </Button>
+        </Box>
+        <Box display={"flex"} justifyContent={"center"}>
+        <Button variant="contained" size="small" onClick={onTempRedirect}>Bypass login in Dev</Button>
         </Box>
         <Box px={4} py={2} sx={styles.bottomText}>
           <Typography fontSize={14}>

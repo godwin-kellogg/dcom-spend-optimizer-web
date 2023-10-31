@@ -39,10 +39,20 @@ const Login = () => {
       });
   };
 
+ const onTempRedirect = ()=>{
+  const auth:any = {
+    name : "Temporary User",
+    email : "temoraryuser.com"
+  };
+  localStorage.setItem("authData", JSON.stringify(auth) );
+  navigate(path);
+ }
+ 
   return (
     <LoginScreen
       onClickClickhere={onClickClickhere}
       onClickLogin={onClickLogin}
+      onTempRedirect={onTempRedirect}
     />
   );
 };

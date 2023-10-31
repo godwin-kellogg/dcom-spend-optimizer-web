@@ -1,6 +1,7 @@
 export interface LoginScreenProps {
   onClickClickhere: () => void;
   onClickLogin: () => void;
+  onTempRedirect : ()=>void;
 }
 export interface MSButtonProps {
   title: string;
@@ -124,6 +125,7 @@ export interface ComptetiorCardData {
 export interface calendarProps {
   onDateSelect?: (value: any) => void;
   isFrom?: boolean;
+  timeframe?:string[];
 }
 export interface DropdownProps {
   initialValue:any;

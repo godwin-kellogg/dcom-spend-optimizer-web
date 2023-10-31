@@ -56,8 +56,6 @@ import {
   filterCategory,
   rows
 } from "./MSOAmazon.data";
-import { smallCardData } from "../MSODescriptive/MSODashboard.data";
-import { Cards } from "components/MSOSmallCards/MSOSmallCards";
 
 
 const MSOAmazon = () => {

@@ -185,18 +185,6 @@ function FilterSidebar({ open, onClose }: any) {
 }
 
 function MsoCharts() {
-  const yAxisValues = ["Value 1", "Value 2", "Value 3", "Value 4"];
-
-  const CustomYAxisTick = (props: { x: any; y: any; payload: any }) => {
-    const { x, y, payload } = props;
-    return (
-      <g transform={`translate(${x},${y})`}>
-        <text x={0} y={0} dy={16} textAnchor="end" fill="#666">
-          {payload.value}
-        </text>
-      </g>
-    );
-  };
   return (
     <>
       <Grid container mt={0} spacing={2}>

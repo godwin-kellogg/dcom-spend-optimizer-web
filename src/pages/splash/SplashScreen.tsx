@@ -13,7 +13,7 @@ import AppScreen from "../app";
 import Login from "../auth/Login";
 import { appConfig } from "config/appConfig";
 import { routes } from "constants/routes";
-import { useMsal } from "@azure/msal-react";
+// import { useMsal } from "@azure/msal-react";
 
 const SplashScreen = () => {
   /**
@@ -25,7 +25,7 @@ const SplashScreen = () => {
    * @returns {React.ReactNode} The `MetaDataWrapper` component.
    */
 
-  const { accounts } = useMsal();
+  // const { accounts } = useMsal();
   const MetaDataWrapper = () => {
     useEffect(() => {
       const changeMetaData = () => {
@@ -61,13 +61,14 @@ const SplashScreen = () => {
           }
         />
         <Route path={routes.login} element={<Login />} />
+        <Route path={routes.dashboard} element={<AppScreen />} />
 
-        <Route
+        {/* <Route
           path={routes.dashboard}
           element={
             accounts.length > 0 ? <AppScreen /> : <Navigate to={routes.login} replace />
           }
-        />
+        /> */}
       </Routes>
     </BrowserRouter>
   );
