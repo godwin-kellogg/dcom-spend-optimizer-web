@@ -25,7 +25,7 @@ This project provides a basic setup and structure for starting a new React appli
 
 In the project directory, you can run:
 
-#### `npm start`
+#### `PUBLIC_URL=url npm start`
 
 Starts the development server.
 
@@ -33,7 +33,7 @@ Starts the development server.
 
 Launches the test runner in the interactive watch mode.
 
-#### `npm run build`
+#### `PUBLIC_URL=url npm run build`
 
 Builds the app for production to the `build` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
