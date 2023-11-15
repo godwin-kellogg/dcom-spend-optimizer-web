@@ -4,31 +4,20 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 import { calendarProps } from "../../@types/components";
 import moment from "moment";
+import React from "react";
 
 
 
 export const CalendarComponent = ({ onDateSelect, isFrom, timeframe }: calendarProps) => {
-
-  console.log("Time frames", timeframe);
   const datesArray = [
-    "08-02-2023",
-    "12-02-2023",
-    "31-09-2023",
-    "07-07-2023",
-    "09-08-2023",
-    "01-06-2023",
-    "03-09-2023",
-    "04-11-2023",
-    "10-03-2023",
-    "04-08-2023"
-  ];
+    "2023-02-08",
+    "2023-05-12",
+];
 
-  const timeArray = timeframe ? timeframe : datesArray;
-
+const timeArray = timeframe ? timeframe : datesArray;
 const dateObjects = timeArray.map(dateStr => {
   const [dd, mm, yyyy] = dateStr.split('-').map(Number);
-  console.log("new Date", yyyy, mm -1, dd);
-  return new Date(dd, mm - 1,yyyy );
+  return new Date(dd, mm - 1, yyyy);
 });
 const minDate = new Date(Math.min(...dateObjects.map(date => date.getTime())));
 const maxDate = new Date(Math.max(...dateObjects.map(date => date.getTime())));
@@ -42,16 +31,12 @@ const formattedFirstDay = firstDayOfMonth.format("DD-MM-YYYY");
 const formattedLastDay = lastDayOfMonth.format("DD-MM-YYYY");
 const initialFromDate = dayjs(`${formattedFirstDay}`, "DD-MM-YYYY");
 const initialToDate = dayjs(`${formattedLastDay}`, "DD-MM-YYYY");
-
-
-console.log("Initial From dates", initialFromDate, initialToDate)
-
-  const handleDateChange = (date: any) => {
-    const formattedDate = dayjs(date).format("DD-MM-YYYY");
-    if (onDateSelect) {
-      onDateSelect(formattedDate);
-    }
-  };
+const handleDateChange = (date: any) => {
+  const formattedDate = dayjs(date).format("DD-MM-YYYY");
+  if (onDateSelect) {
+    onDateSelect(formattedDate);
+  }
+};
 
   const isDisabledDate = (date: any) => {
     const currentDate = dayjs(date);

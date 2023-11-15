@@ -87,11 +87,11 @@ export interface LandingCard{
 }
 
 export interface CardProps  {
-  header:string;
+  header:number | string;
   subHeader:string;
   bgColor?:string;
-  actionLeft?:number|string;
-  actionRight?:number|string;
+  action?:number|string;
+  delta?:string;
   rightColor?: string;
   arrowIcon?:any;
 };
@@ -123,12 +123,13 @@ export interface ComptetiorCardData {
 };
 
 export interface calendarProps {
-  onDateSelect?: (value: any) => void;
+  onDateSelect: (value: any) => void;
   isFrom?: boolean;
-  timeframe?:string[];
+  timeframe:string[];
 }
 export interface DropdownProps {
   initialValue:any;
-  menuItem:any[];
+  menuItem:any[''];
   onChange?:(value:any)=>void;
+  isCode?:boolean;
 };

@@ -4,8 +4,9 @@ import React from "react";
 import { styles } from "./DropdownComponent.styles";
 import { DropdownProps } from "../../@types/components";
 
-export const DropDown = ({ initialValue, menuItem, onChange }: DropdownProps) => {
+export const DropDown = ({ initialValue, menuItem, onChange, isCode }: DropdownProps) => {
   const [value, setValue] = React.useState<string>(initialValue);
+  const [result, setrResult] = React.useState<string>('')
   const handleChange = (event: any) => {
     let selectedVal:string = event.target.value;
     setValue(selectedVal);
@@ -24,11 +25,21 @@ export const DropDown = ({ initialValue, menuItem, onChange }: DropdownProps) =>
         }}
         data-testid="dropdown-select"
       >
-        {menuItem.map((value: string, index: number) => (
-          <MenuItem sx={styles.text} value={value} key={index} divider={true}>
-            {`${value}`.slice(0, 35)} 
-          </MenuItem>
-        ))}
+        {menuItem.map((value: string, index: number) =>{
+          
+//           if(value.length <= 35){
+//             console.log("Lenght is Higher")
+//             const parts = value.split(",");
+//             setrResult(parts[parts.length - 1])
+// ;          }
+           
+         return  (
+            <MenuItem sx={styles.text} value={value} key={index} divider={true}>
+              {/* {`${value}`.slice(0, 35)} {isCode ?  `, ${result}` : ""} */}
+              {`${value}`.slice(0, 35)}
+            </MenuItem>
+          )
+        })}
       </Select>
     </FormControl>
   );

@@ -1,3 +1,5 @@
+import layersIcon from "src/assets/icons/layers.svg";
+import rupeeIcon from "src/assets/icons/rupee-sign.png";
 export const cardDetails = [
   {
     month: "January",
@@ -208,13 +210,13 @@ export const TopCardData = [
     running : 16,
     total : "40 Lacs",
     values : [0, 10, 20, 30, 40],
-    img : "/assets/icons/layers.svg"
+    img : layersIcon
   },
   {
     title : "Spend/Budget",
     running: 52,
     total : "80 Lacs",
     values : ["₹0L", "₹20L", "₹40L", "₹60L", "₹80L"],
-    img : "/assets/icons/rupee-sign.png"
+    img : rupeeIcon
   }
 ]

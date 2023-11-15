@@ -3,11 +3,11 @@ import { cardDetails } from "../TPOOptimiser/cardDetails";
 import { styles } from "./TPOMonth.styles";
 import { Typography, Grid, IconButton } from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import {TPOChip} from "components/TPOChip/tpoChips";
-import {TPODetailsCards} from "components/TPODetailsCard/TPODetailsCard";
+import {TPOChip} from "src/components/TPOChip/tpoChips";
+import {TPODetailsCards} from "src/components/TPODetailsCard/TPODetailsCard";
 import { TPODetailsData } from "./TPOData";
-import { appRouters } from "constants/routes";
-import MSButton from "components/MSButton/MSButton";
+import { appRouters } from "src/constants/routes";
+import MSButton from "src/components/MSButton/MSButton";
 import AddIcon from '@mui/icons-material/Add';
 
 

@@ -9,33 +9,76 @@ import {
   Drawer,
   Grid,
   IconButton,
+  LinearProgress,
   List,
   ListItem,
   ListItemText,
   Typography,
-  LinearProgress
 } from "@mui/material";
-import { Item } from "components/ItemPaper/ItemPaper";
-import MSButton from "components/MSButton/MSButton";
-import { TPOProgressCard } from "components/ProgressCard/ProgressCard";
-import { CalendarComponent } from "components/calendar/calendar";
-import {DropDown} from "components/DropdownComponent/DropdownComponent";
-import { Filter, DrawerHeader } from "components/sidebar/FilterSidebar";
+import { filterApi, getFilteredData } from "src/api/tpo.api";
+import { DropDown } from "src/components/DropdownComponent/DropdownComponent";
+import { Item } from "src/components/ItemPaper/ItemPaper";
+import MSButton from "src/components/MSButton/MSButton";
+import { TPOProgressCard } from "src/components/ProgressCard/ProgressCard";
+import { CalendarComponent } from "src/components/calendar/calendar";
+import { DrawerHeader, Filter } from "src/components/sidebar/FilterSidebar";
 import React from "react";
 import "./TPODashboard.css";
-import { CardData, ChangedCardData, filterCategory } from "./TPODashboardData";
+import { CardData } from "./TPODashboardData";
 import TPODashboardGraph from "./TPOGraphs/TPODashboardGraph";
 import { data, dataChanged } from "./TPOGraphs/chartData";
-import { filterApi } from "api/tpo.api";
 
 const TPODashboard = () => {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
+  const [filterData, setFilterdata] = React.useState<any[] | boolean>(false);
+  const [cardsVal, setCardVal] = React.useState<any>();
   const [isValue, setValue] = React.useState(false);
 
   const handleFilterButtonClick = () => {
     setDrawerOpen(!drawerOpen);
   };
 
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await filterApi();
+        if (response) {
+          const result = await response.json();
+          setFilterdata(result);
+        } else {
+          setFilterdata(false);
+          console.log("Data error", response);
+        };
+
+      } catch (error) {
+
+      }
+    };
+
+    fetchData();
+    TPOdata();
+  }, []);
+
+
+  const TPOdata = async ()=>{
+    try {
+    const response = await getFilteredData("hello");
+    if(response){
+      const cardRes = response.cardData;
+      setCardVal(cardRes);
+      // CardData[0].cards[0].header = cardRes.s2s.s_to_s_ratio;
+      // console.log("Screen data response", response, cardRes.s2s.s_to_s_delta);
+    };
+    } catch (error) {
+      
+    }
+  };
+
+
+
+  const applyFil = (data:any)=>{
+    console.log("Apply filter is working fine++", data);
+  }
   return (
     <Grid container sx={{ ml: -4 }}>
       <Grid item>
@@ -43,9 +86,8 @@ const TPODashboard = () => {
           <FilterSidebar
             open={drawerOpen}
             onClose={handleFilterButtonClick}
-            onFilterDataChange={() => {
-              setValue(!isValue);
-            }}
+            applyFilters={(data:any)=>{applyFil(data)}}
+            data={filterData}
           />
         ) : (
           <Filter handleFilterButtonClick={handleFilterButtonClick} />
@@ -56,7 +98,7 @@ const TPODashboard = () => {
         item
         sx={{ mt: 1, mr: 2, position: "absolute", left: drawerOpen ? 330 : 70 }}
       >
-        <RightConatiner value={isValue} />
+        <RightConatiner value={cardsVal} />
       </Grid>
     </Grid>
   );
@@ -64,25 +106,37 @@ const TPODashboard = () => {
 
 export default TPODashboard;
 
-const RightConatiner = ({ value }: any) => {
+const RightConatiner = ({value} : any) => {
+  const [myCard, setCard] = React.useState(CardData);
+
+  React.useEffect(()=>{
+    if(value){
+      const s2sRatio = value.s2s?.s_to_s_ratio;
+      const s2sDelta = value.s2s?.s_to_s_delta;
+      // const updatedCardData = [...myCard];
+      // updatedCardData[0].cards[0].header = 's2sRatio';
+      // updatedCardData[0].cards[0].delta = value.s2s?.s_to_s_delta;
+      // setCard(updatedCardData);
+      console.log("card data from States", s2sRatio, s2sDelta, value)
+    }
+    
+  },[value]);
+
   return (
     <Box className="main-container">
       <Grid container spacing={2}>
-        {(value ? ChangedCardData : CardData).map((data, index) => (
+        {myCard.map((data, index) => (
           <Grid item xs={12} md={12} lg={data.lg} key={index}>
-            <Item>
+            <Item padding="0.75rem">
               <Typography className="container-header">{data.title}</Typography>
-              <Grid container spacing={1}>
+              <Grid container spacing={2}>
                 {data.cards.map((value, index) => (
                   <Grid item xs={6} sm={4} md={4} lg={value.lg} key={index}>
                     <TPOProgressCard
                       header={value.header}
                       subHeader={value.subHeader}
-                      bgColor={value.bgColor}
-                      actionLeft={value.leftAction}
-                      actionRight={value.rightAction}
-                      arrowIcon={value.arrowIcon}
-                      rightColor={value.rightColor}
+                      action={value.action}
+                      delta={value.delta}
                     />
                   </Grid>
                 ))}
@@ -99,40 +153,85 @@ const RightConatiner = ({ value }: any) => {
   );
 };
 
-function FilterSidebar({ open, onClose, onFilterDataChange }: any) {
-  const [category, setCategory] = React.useState<any>(filterCategory);
+function FilterSidebar({ open, onClose, applyFilters, data }: any) {
+  const [category, setCategory] = React.useState<string[]>(["ALL CATEGORIES"]);
+  const [skus, setSkus] = React.useState<string[]>(["ALL SKUs"]);
+  const [promotions, setPromotions] = React.useState<string[]>(["ALL PROMOTIONS"]);
+  const [timeframe, setTimeframe] = React.useState<string[]>([]);
   const [showProgress, setProgress] = React.useState<boolean>(true);
-  const [intialVal] = React.useState<string>('CHOCO FILLS');
 
-  function applyFilters() {
-    onFilterDataChange("changed");
-  }
+
+
+  const [filters, setFilters] = React.useState<any>({
+    category : "ALL CATEGORIES",
+    skus : "ALL SKUs",
+    promotions : "ALL PROMOTIONS",
+    to_timeframe : "",
+    from_timeframe : ""
+  });
 
   const handleDropDownChange = (type: string, value: any) => {
     console.log("value From Change DropDown", value, type);
-    onFilterDataChange("changed");
+    switch (type){
+      case "Category":
+        setFilters((data:any) => ({
+          ...data,
+          category: value
+        }));
+      break;
+      case "Promotion":
+      setFilters((data:any) => ({
+        ...data,
+        promotions: value[0]
+      }));
+      break;
+      case "SKUs":
+      setFilters((data:any) => ({
+        ...data,
+        skus: value[0]
+      }));
+      break;
+        default:
+        break;
+    }
+
+    
   };
 
   const onChangeMethod = (type: string, value: any) => {
-    console.log("Data Chabge", value.$d, type);
+    console.log("Data Chabge", type, value);
+    console.log("After getting filter", filters);
+
+    if(type === 'From'){
+    setFilters((data:any) => ({
+      ...data,
+      from_timeframe: value
+    }));
+    }else{
+      setFilters((data:any) => ({
+        ...data,
+        to_timeframe: value
+      }));
+    }
   };
 
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await filterApi();
-        if(response){
-        const data = await response?.json();
-        setCategory(data.result);
-        setProgress(response?.ok ? false : true);
-        }else{setCategory(filterCategory)}
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+  const applyFil = ()=>{
+    console.log("Apply filter is working fine");
+  }
 
-    fetchData();
-  }, []);
+  React.useEffect(() => {
+    if (data) {
+      const result = data.result;
+      setCategory(["ALL CATEGORIES", ...result.categories]);
+      setSkus(["ALL SKUs", ...result.skus]);
+      setPromotions(["ALL PROMOTIONS", ...result.promotions]);
+      setTimeframe(result.timeframe);
+      setProgress(false);
+    } else {
+      setProgress(true);
+      console.log("Error while getting data");
+    }
+  }, [data]);
 
   return (
     <Drawer
@@ -157,13 +256,13 @@ function FilterSidebar({ open, onClose, onFilterDataChange }: any) {
         </IconButton>
       </DrawerHeader>
       <Divider />
-      {
-        showProgress ? <Box sx={{ width: '100%', color : "blue" }} color="seagreen">
-        <LinearProgress />
-        </Box> : 
+      {showProgress ? (
+        <Box sx={{ width: "100%", color: "blue" }} color="seagreen">
+          <LinearProgress />
+        </Box>
+      ) : (
         ""
-      }
-      
+      )}
 
       <List>
         <ListItem>
@@ -171,8 +270,8 @@ function FilterSidebar({ open, onClose, onFilterDataChange }: any) {
             <Typography className="titleText">Category</Typography>
             <Typography>
               <DropDown
-                initialValue={`${intialVal}`}
-                menuItem={category.categories}
+                initialValue={category[0]}
+                menuItem={category}
                 onChange={(value) => handleDropDownChange("Category", value)}
               />
             </Typography>
@@ -183,9 +282,10 @@ function FilterSidebar({ open, onClose, onFilterDataChange }: any) {
             <Typography className="titleText">SKUs</Typography>
             <Typography sx={{ width: "100%" }}>
               <DropDown
-                initialValue={`${category.skus[0][0]}`}
-                menuItem={category.skus}
+                initialValue={skus[0]}
+                menuItem={skus}
                 onChange={(value) => handleDropDownChange("SKUs", value)}
+                isCode={true}
               />
             </Typography>
           </ListItemText>
@@ -195,8 +295,8 @@ function FilterSidebar({ open, onClose, onFilterDataChange }: any) {
             <Typography className="titleText">Promotion</Typography>
             <Typography>
               <DropDown
-                initialValue={`B01N1PCX5G,SH34`}
-                menuItem={category.promotions}
+                initialValue={promotions[0]}
+                menuItem={promotions}
                 onChange={(value) => handleDropDownChange("Promotion", value)}
               />
             </Typography>
@@ -216,7 +316,7 @@ function FilterSidebar({ open, onClose, onFilterDataChange }: any) {
                   onDateSelect={(value: any) => {
                     onChangeMethod("From", value);
                   }}
-                  timeframe={category.timeframe}
+                  timeframe={timeframe}
                 />
               </Typography>
             </ListItem>
@@ -230,7 +330,7 @@ function FilterSidebar({ open, onClose, onFilterDataChange }: any) {
                   onDateSelect={(value: any) => {
                     onChangeMethod("To", value);
                   }}
-                  // timeframe={category.timeframe}
+                  timeframe={timeframe}
                 />
               </Typography>
             </ListItem>
@@ -238,12 +338,20 @@ function FilterSidebar({ open, onClose, onFilterDataChange }: any) {
         </ListItem>
       </List>
 
-      <Divider sx={{ mt: 1 }} />
-      <Box sx={{ padding: "0.875rem" }}>
+      <Box
+        sx={{
+          position: "relative",
+          bottom: 0,
+          mt:4,
+          width: "100%",
+        }}
+      >
+        <Divider />
         <MSButton
           title="Apply"
+          sx={{ margin: 2, width: "40%" }}
           endIcon={<ArrowForward />}
-          onClick={applyFilters}
+          onClick={()=>{applyFilters(filters)}}
         />
       </Box>
     </Drawer>

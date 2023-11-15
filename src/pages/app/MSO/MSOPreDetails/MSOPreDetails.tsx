@@ -4,15 +4,15 @@ import {
          IconButton, 
          Typography 
 } from "@mui/material";
-import { TPOChip } from "components/TPOChip/tpoChips";
-import MSButton from "components/MSButton/MSButton";
+import { TPOChip } from "src/components/TPOChip/tpoChips";
+import MSButton from "src/components/MSButton/MSButton";
 import AddIcon from '@mui/icons-material/Add';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate, useParams, } from "react-router-dom";
 import { MSODetailsData } from "./MSOData";
 import {cardDetails} from "../MSOPredictive/MSOPredictive.data";
-import { TPODetailsCards } from "components/TPODetailsCard/TPODetailsCard";
-import { appRouters } from "constants/routes";
+import { TPODetailsCards } from "src/components/TPODetailsCard/TPODetailsCard";
+import { appRouters } from "src/constants/routes";
 
 
 const MSOPreDetails = () => {

@@ -1,4 +1,4 @@
-import { Item } from "components/ItemPaper/ItemPaper";
+import { Item } from "src/components/ItemPaper/ItemPaper";
 import { 
         Typography,
      } from "@mui/material";

@@ -17,7 +17,7 @@ const root = ReactDOM.createRoot(
 const msalInstance = new PublicClientApplication(msalConfig);
 
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
   <MsalProvider instance={msalInstance}>
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={appTheme}>
@@ -27,7 +27,7 @@ root.render(
       </ThemeProvider>
     </StyledEngineProvider>
   </MsalProvider>
-   </React.StrictMode>
+  //  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

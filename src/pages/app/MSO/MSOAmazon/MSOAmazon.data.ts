@@ -1,3 +1,6 @@
+import comp1 from "src/assets/images/Comp1.png";
+
+
 export const filterCategory = {
     initialVal : "All Categories",
     Category : [
@@ -9,8 +12,6 @@ export const filterCategory = {
         "Chocos"
     ]
 };
-
-
 export const TopCategories = [
     {
         category : "Top Viewed Categories",
@@ -72,22 +73,22 @@ export const ProductSearch = {
 export const ComptitionData = [
     {
         id : 1,
-        imgSrc : "../../assets/images/Comp1.png",
+        imgSrc : comp1,
         textData : "Bagrry's Crunchy Muesli with 30% Fruit & Nut Cranberries 750gm Pouch |34% Fibre Rich Oats|No Sugar Infuesed Fruits|Real Fruits|Breakfast Cereal|Protein Rich|Cranberry Muesli"
     },
     {
         id : 2,
-        imgSrc : "../../assets/images/Comp1.png",
+        imgSrc : comp1,
         textData : "Bagrry's Crunchy Muesli with 30% Fruit & Nut Cranberries 750gm Pouch |34% Fibre Rich Oats|No Sugar Infuesed Fruits|Real Fruits|Breakfast Cereal|Protein Rich|Cranberry Muesli"
     },
     {
         id : 3,
-        imgSrc : "../../assets/images/Comp1.png",
+        imgSrc : comp1,
         textData : "Bagrry's Crunchy Muesli with 30% Fruit & Nut Cranberries 750gm Pouch |34% Fibre Rich Oats|No Sugar Infuesed Fruits|Real Fruits|Breakfast Cereal|Protein Rich|Cranberry Muesli"
     },
     {
         id : 4,
-        imgSrc : "../../assets/images/Comp1.png",
+        imgSrc : comp1,
         textData : "Bagrry's Crunchy Muesli with 30% Fruit & Nut Cranberries 750gm Pouch |34% Fibre Rich Oats|No Sugar Infuesed Fruits|Real Fruits|Breakfast Cereal|Protein Rich|Cranberry Muesli"
     },
 ];

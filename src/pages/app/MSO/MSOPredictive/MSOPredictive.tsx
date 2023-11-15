@@ -4,11 +4,11 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { Item } from "components/ItemPaper/ItemPaper";
-import { MSOOptimiserCards } from "components/OptimiserCard/OptimiserCardComponent";
-import {DropDown} from "components/DropdownComponent/DropdownComponent";
-import { LinearProgressComponent } from "components/linearProgress/linearProgress";
-import { appRouters } from "constants/routes";
+import { Item } from "src/components/ItemPaper/ItemPaper";
+import { MSOOptimiserCards } from "src/components/OptimiserCard/OptimiserCardComponent";
+import {DropDown} from "src/components/DropdownComponent/DropdownComponent";
+import { LinearProgressComponent } from "src/components/linearProgress/linearProgress";
+import { appRouters } from "src/constants/routes";
 import { useNavigate } from "react-router-dom";
 import { TopCardData, cardDetails, dropDown } from "./MSOPredictive.data";
 import { styles } from "./MSOPredictive.styles";

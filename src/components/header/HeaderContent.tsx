@@ -28,13 +28,11 @@ import {
   Typography,
 } from "@mui/material";
 import { HeaderContentProps } from "../../@types/components";
-import { headerData } from "constants/screensData";
+import { headerData } from "src/constants/screensData";
 import { AppBar, styles } from "./header.styles";
-import { useLocation, useNavigate} from "react-router-dom";
-import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
-import { path } from "constants/routes";
-
-
+import { useLocation, useNavigate } from "react-router-dom";
+import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
+import { path } from "src/constants/routes";
 
 const HeaderContent = ({
   open,
@@ -44,14 +42,14 @@ const HeaderContent = ({
   onClickLogout,
   isCurrentPath,
   headerText,
-  toggleDrawer
+  toggleDrawer,
 }: HeaderContentProps) => {
-    let auth:any = localStorage.getItem("authData");
-    const authData = JSON.parse(auth);
-    const navigation = useNavigate()
+  let auth: any = localStorage.getItem("authData");
+  const authData = JSON.parse(auth);
+  const navigation = useNavigate();
 
-    const location = useLocation();
-    const isHome:boolean = location.pathname.startsWith("/CrunchLab/");
+  const location = useLocation();
+  const isHome: boolean = location.pathname.startsWith("/CrunchLab/");
   return (
     <>
       <CssBaseline />
@@ -72,10 +70,12 @@ const HeaderContent = ({
             </IconButton>
           )}
           <IconButton
-          disableRipple
-          onClick={()=>{navigation(path)}}
+            disableRipple
+            onClick={() => {
+              navigation(path);
+            }}
           >
-            <img src={headerData.logo} alt="logo" style={styles.logo} />
+            <img src={headerData.logo} alt="logos" style={styles.logo} />
           </IconButton>
           <Typography
             color="text.primary"
@@ -84,25 +84,29 @@ const HeaderContent = ({
             sx={{ flexGrow: 1 }}
             fontWeight={600}
           >
-            { 
-              isCurrentPath
-              ? headerText.split("/")[1].replace(/([A-Z])/g, ' $1').toUpperCase()
-              : headerText.split("/")[2].replace(/([A-Z])/g, ' $1').toUpperCase()
-            }
+            {isCurrentPath
+              ? headerText
+                  .split("/")[1]
+                  .replace(/([A-Z])/g, " $1")
+                  .toUpperCase()
+              : headerText
+                  .split("/")[2]
+                  .replace(/([A-Z])/g, " $1")
+                  .toUpperCase()}
           </Typography>
           <Box display={"flex"} alignItems={"center"}>
-            {
-              isHome ? 
-                <IconButton 
-                sx={{marginRight : 3, color : "black"}}
-                onClick={()=>{
-                  navigation(-1)
+            {isHome ? (
+              <IconButton
+                sx={{ marginRight: 3, color: "black" }}
+                onClick={() => {
+                  navigation(-1);
                 }}
-                >
-                  <ArrowBackRoundedIcon />
-                </IconButton>
-              : <>
-              <Box>
+              >
+                <ArrowBackRoundedIcon />
+              </IconButton>
+            ) : (
+              <>
+                <Box>
                   <img
                     src={headerData.notificationIcon}
                     alt="icon"
@@ -117,8 +121,8 @@ const HeaderContent = ({
                   />
                 </Box>
               </>
-            }
-            
+            )}
+
             <Box>
               <img
                 src={headerData.userIcon}
@@ -151,7 +155,6 @@ const HeaderContent = ({
                   <Box ml={1}>
                     <Typography color="text.primary">
                       {authData.name}
-                      
                     </Typography>
                     <Typography color="grey" fontSize={12}>
                       {authData.email}

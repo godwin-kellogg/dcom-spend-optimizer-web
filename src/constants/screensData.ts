@@ -1,20 +1,29 @@
 import { appRouters } from "./routes";
+import applogo from "src/assets/images/Applogo.png";
+import tpoimg from "src/assets/images/TPO.png";
+import msoimg from "src/assets/images/MSO.png";
+import image38 from "src/assets/images/image-38.png";
+import patternImg from "src/assets/images/pattern.png";
+import cloudImg from "src/assets/icons/cloud.png";
+import watermark from "src/assets/images/watermark.png";
+import notificationimg from "src/assets/icons/notification-line.png";
+import questionline from "src/assets/icons/question-line.png";
+import userIcon from "src/assets/icons/User-Icon.png";
+import logoutIcon from "src/assets/icons/log-out.png";
 
 export const brand = "Kelloggs";
 export const brandName = "Mu-Sigma";
-const brandLogo = "/assets/images/logo.png";
-
 
 export const logInScreenData = {
-  backgroundImage: "/assets/images/pattern.png",
+  backgroundImage: patternImg,
   header: {
     title: "Login",
-    logo: brandLogo,
-    rightSideImg: "/assets/images/image-38.png",
+    logo: applogo,
+    rightSideImg: image38,
   },
   button: {
-    title: ` Log in with ${brand} SSO`,
-    startIcon: "/assets/icons/cloud.png",
+    title: `Log in with ${brand} SSO`,
+    startIcon: cloudImg,
   },
   footer: {
     text1: `Log in with your ${brand} e-mail address. If you do not have a
@@ -27,31 +36,30 @@ export const logInScreenData = {
   },
 };
 export const LandingScreenData = {
-  watermark: "/assets/images/watermark.png",
+  watermark: watermark,
 };
 export const headerData = {
-  logo: brandLogo,
+  logo: applogo,
   text: "CRUNCH LAB",
-  notificationIcon: "/assets/icons/notification-line.png",
-  questionIcon: "/assets/icons/question-line.png",
-  userIcon: "/assets/icons/User-Icon.png",
+  notificationIcon: notificationimg,
+  questionIcon: questionline,
+  userIcon: userIcon,
   dropdown: {
-    logoutIcon: "/assets/icons/log-out.png",
+    logoutIcon: logoutIcon,
     logOut: "Log Out",
   },
 };
 
-
 export const LandingCardsData = [
   {
-    img: "/assets/images/TPO.png",
+    img: tpoimg,
     header: "Trade Promo Optimiser",
     subHeader: "TPO Dashboard Description",
     buttons: [
       {
         name: "Go to Dashboard",
         navigation: appRouters.tpoDashboard,
-        variant : "contained"
+        variant: "contained",
       },
       {
         name: "Go to Optimiser",
@@ -61,7 +69,7 @@ export const LandingCardsData = [
     ],
   },
   {
-    img: "/assets/images/MSO.png",
+    img: msoimg,
     header: "MSO Dashboard",
     subHeader: "TPO Dashboard Description",
     buttons: [
@@ -78,4 +86,3 @@ export const LandingCardsData = [
     ],
   },
 ];
-

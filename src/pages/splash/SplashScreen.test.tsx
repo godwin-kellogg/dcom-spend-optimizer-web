@@ -6,7 +6,7 @@ import Login from "../auth/Login";
 import AppScreen from "../app";
 import { appConfig } from "../../config/appConfig";
 import { Provider } from "react-redux";
-import { store } from "redux/store/store";
+import { store } from "src/redux/store/store";
 
 describe("SplashScreen", () => {
   test("renders HomeScreen component", () => {

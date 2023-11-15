@@ -1,26 +1,24 @@
 import CloseIcon from "@mui/icons-material/Close";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
   Box,
+  Collapse,
   Drawer,
   IconButton,
   List,
-  ListItem,
   ListItemButton,
   ListItemIcon,
-  ListItemText,
-  Stack,
-  Typography,
+  ListItemText
 } from "@mui/material";
-import { appRouters, path } from "constants/routes";
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import homeIcon from "src/assets/icons/home.svg";
+import { path } from "src/constants/routes";
 import { AccordionData } from "../../@types/components";
 import "./CustomDrawer.css";
+
+import { ExpandLess, ExpandMore } from "@mui/icons-material";
+import { listData } from "./CustomDrawer.data";
 
 export const CustomDrawer = ({ open, toggleDrawer }: any) => {
   return (
@@ -28,161 +26,135 @@ export const CustomDrawer = ({ open, toggleDrawer }: any) => {
       anchor="left"
       open={open}
       onClose={toggleDrawer(false)}
-      sx={{ zIndex: 1300 }}
+      sx={{ zIndex: 1400 }}
     >
       {ListComponent(toggleDrawer)}
     </Drawer>
   );
 };
 
-const listData = [
-  {
-    panel: "panel1",
-    icon: "/assets/icons/tpo-expand.svg",
-    title: "Trade Promo Optimiser",
-    content: [
-      {
-        name: "Predictive View",
-        path: appRouters.tpoOptimiser,
-      },
-      {
-        name: "Descriptive View",
-        path: appRouters.tpoDashboard,
-      },
-    ],
-  },
-  {
-    panel: "panel2",
-    icon: "/assets/icons/mso-expand.svg",
-    title: "Sales BB Optimiser",
-    content: [
-      {
-        name: "Predictive View",
-        path: appRouters.msoPredictive,
-      },
-      {
-        name: "Descriptive View",
-        path: appRouters.msoDescriptive,
-      },
-      {
-        name: "Amazon PI",
-        path: appRouters.msoAmazonPI,
-      },
-    ],
-  },
-];
-
 const ListComponent = (toggleDrawer: (open: boolean) => () => void) => {
   const navigate = useNavigate();
+  
   return (
-    <Box sx={{ width: 350 }} role="presentation">
+    <Box sx={{ minWidth: 360 }} role="presentation">
       <IconButton
         data-testid="close-icon"
         className="closeIcon"
         onClick={toggleDrawer(false)}
+        size="large"
       >
         <CloseIcon />
       </IconButton>
 
-      <List>
-        <ListItem
-          onClick={() => {
-            navigate(path);
-          }}
-        >
+      <Box display="flex" justifyContent="center" component="div">
+        <List sx={{ width: 280 }} component="nav">
           <ListItemButton
-            onClick={toggleDrawer(false)}
+            onClick={
+              toggleDrawer(false)
+            }
             sx={{
               ":hover": {
                 background: "none",
-                color: "blue",
+                color: "rgba(43, 82, 221, 1)",
                 transition: "filter 0.5s ease-in",
               },
             }}
           >
-            <ListItemIcon sx={{ marginLeft: 3 }}>
-              <img src="/assets/icons/home.svg" />
+            <ListItemIcon onClick={()=>{navigate(path)}}>
+              <img src={homeIcon} />
             </ListItemIcon>
-            <ListItemText className="home-text">Home</ListItemText>
+            <ListItemText
+              onClick={()=>{navigate(path)}}
+              
+              sx={{ ml: -3 }}
+              primary={<span className="home-text">Home</span>}
+            />
           </ListItemButton>
-        </ListItem>
 
-        {listData.map((data) => (
-          <ListItem key={data.title}>
-            <CustomAccordion {...data} toggleDrawer={toggleDrawer} />
-          </ListItem>
-        ))}
-      </List>
+          {listData.map((data) => (
+            <CustomCollapse
+              {...data}
+              
+              toggleDrawer={toggleDrawer}
+              key={data.title}
+            />
+          ))}
+        </List>
+      </Box>
     </Box>
   );
 };
 
-const CustomAccordion = ({
+const CustomCollapse = ({
   icon,
   title,
-  panel,
-  toggleDrawer,
   content,
+  toggleDrawer,
 }: AccordionData) => {
-  const [expanded, setExpanded] = React.useState<string | false>(false);
-  const handleAccordionChange =
-    (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
-      console.log(panel);
-      setExpanded(isExpanded ? panel : false);
-    };
+  const [expanded, setExpanded] = React.useState<boolean>(false);
   const location = useLocation();
-  const isExpanded =
-    content.some((data) => location.pathname === data.path) ||
-    expanded === panel;
   const navigation = useNavigate();
+  React.useEffect(() => {
+    setExpanded(content.some((data) => location.pathname === data.path));
+  }, [content, location.pathname]);
+  const handleClick = () => {
+    setExpanded(!expanded);
+  };
 
   return (
-    <Accordion
-      sx={{ boxShadow: "none", width: "88%", marginLeft: isExpanded ? 2 : 0 }}
-      expanded={isExpanded}
-      onChange={handleAccordionChange(panel)}
-      disableGutters
-    >
-      <AccordionSummary
-        expandIcon={
-          <ExpandMoreIcon
-            className={isExpanded ? "listIconsExpended" : "listIconNormal"}
-          />
-        }
-        className={isExpanded ? "expandedAccordion" : "expandedAccordionNormal"}
+    <>
+      <ListItemButton
+        disableTouchRipple
+        autoFocus={false}
+        onClick={handleClick}
+        className={expanded ? "expandedAccordion" : "expandedAccordionNormal"}
       >
-        <ListItemText sx={{ marginLeft: 3 }}>
-          <img src={icon} width="16px" height="16px" /> &nbsp; {title}
-        </ListItemText>
-      </AccordionSummary>
-      <AccordionDetails>
-        <Stack spacing={2} direction="column" useFlexGap>
-          {content.map((data: any) => (
-            <Box
+        <ListItemIcon>
+          <img src={icon} width="16px" height="16px" />
+        </ListItemIcon>
+
+        <ListItemText sx={{ ml: -3 }} primary={<span className={expanded ? "home-text-active" : "home-text"}>{title}</span>} />
+        {expanded ? (
+          <ExpandLess
+            className={expanded ? "listIconsExpended" : "listIconNormal"}
+          />
+        ) : (
+          <ExpandMore
+            className={expanded ? "listIconsExpended" : "listIconNormal"}
+          />
+        )}
+      </ListItemButton>
+
+      <Collapse in={expanded} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding onClick={toggleDrawer(false)}>
+          {content.map((data) => (
+            <ListItemButton
+              sx={{ pl: 5 }}
               onClick={() => {
                 navigation(data.path);
               }}
-              key={data.name}
-              className="listTypography"
             >
-              <Typography
-                className={
-                  data.path === location.pathname
-                    ? "listItems-active"
-                    : "listItems"
+              <ListItemText
+                primary={
+                  <span
+                    className={
+                      data.path === location.pathname
+                        ? "listItems-active"
+                        : "listItems"
+                    }
+                  >
+                    {data.name}
+                  </span>
                 }
-                onClick={toggleDrawer(false)}
-                ml={4}
-              >
-                {data.name}
-              </Typography>
-              <IconButton>
+              />
+              <ListItemIcon sx={{pl : 5}}>
                 <KeyboardArrowRightIcon className="listIconNormal" />
-              </IconButton>
-            </Box>
+              </ListItemIcon>
+            </ListItemButton>
           ))}
-        </Stack>
-      </AccordionDetails>
-    </Accordion>
+        </List>
+      </Collapse>
+    </>
   );
 };

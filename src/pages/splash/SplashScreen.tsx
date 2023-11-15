@@ -11,8 +11,8 @@ import { useEffect } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import AppScreen from "../app";
 import Login from "../auth/Login";
-import { appConfig } from "config/appConfig";
-import { routes } from "constants/routes";
+import { appConfig } from "src/config/appConfig";
+import { routes } from "src/constants/routes";
 // import { useMsal } from "@azure/msal-react";
 
 const SplashScreen = () => {
@@ -48,7 +48,7 @@ const SplashScreen = () => {
   };
   
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <MetaDataWrapper />
       <Routes>
         <Route path="/" element={<Navigate to={routes.login} replace />} />

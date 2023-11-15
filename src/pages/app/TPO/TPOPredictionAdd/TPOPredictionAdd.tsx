@@ -21,9 +21,9 @@ import {
   Typography,
   styled
 } from "@mui/material";
-import MSButton from "components/MSButton/MSButton";
-import { CalendarComponent } from "components/calendar/calendar";
-import {DropDown} from "components/DropdownComponent/DropdownComponent";
+import MSButton from "src/components/MSButton/MSButton";
+import { CalendarComponent } from "src/components/calendar/calendar";
+import {DropDown} from "src/components/DropdownComponent/DropdownComponent";
 import { styles } from "./TPOPrediction.styles";
 import {
   Budget,
@@ -147,7 +147,7 @@ const Header = () => {
           Start Date
         </Typography>
         <Typography>
-          <CalendarComponent isFrom={true} />
+          {/* <CalendarComponent isFrom={true} /> */}
         </Typography>
       </Grid>
 
@@ -156,7 +156,7 @@ const Header = () => {
           End Date
         </Typography>
         <Typography>
-          <CalendarComponent isFrom={false} />
+          {/* <CalendarComponent isFrom={false} /> */}
         </Typography>
       </Grid>
 

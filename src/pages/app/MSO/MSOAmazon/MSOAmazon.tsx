@@ -20,12 +20,12 @@ import {
   TableRow,
   Typography
 } from "@mui/material";
-import { DropDown } from "components/DropdownComponent/DropdownComponent";
-import { Item } from "components/ItemPaper/ItemPaper";
-import MSButton from "components/MSButton/MSButton";
-import { TopRankingTable } from "components/TopRankingKeywords/TopRankingTable";
-import { CalendarComponent } from "components/calendar/calendar";
-import { DrawerHeader, Filter } from "components/sidebar/FilterSidebar";
+import { DropDown } from "src/components/DropdownComponent/DropdownComponent";
+import { Item } from "src/components/ItemPaper/ItemPaper";
+import MSButton from "src/components/MSButton/MSButton";
+import { TopRankingTable } from "src/components/TopRankingKeywords/TopRankingTable";
+import { CalendarComponent } from "src/components/calendar/calendar";
+import { DrawerHeader, Filter } from "src/components/sidebar/FilterSidebar";
 import React from "react";
 import {
   Bar,
@@ -160,12 +160,12 @@ function FilterSidebar({ open, onClose, onFilterDataChange }: any) {
                 From
               </Typography>
               <Typography>
-                <CalendarComponent
+                {/* <CalendarComponent
                   isFrom={true}
                   onDateSelect={(value: any) => {
                     onChangeMethod("From", value);
                   }}
-                />
+                /> */}
               </Typography>
             </ListItem>
             <ListItem sx={{ marginTop: 3 }}>
@@ -173,12 +173,12 @@ function FilterSidebar({ open, onClose, onFilterDataChange }: any) {
                 To
               </Typography>
               <Typography>
-                <CalendarComponent
+                {/* <CalendarComponent
                   isFrom={false}
                   onDateSelect={(value: any) => {
                     onChangeMethod("To", value);
                   }}
-                />
+                /> */}
               </Typography>
             </ListItem>
           </ListItemText>

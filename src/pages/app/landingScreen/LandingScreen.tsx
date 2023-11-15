@@ -10,14 +10,14 @@
  */
 
 import { Box, CardMedia, Grid } from "@mui/material";
-import { LandingCardsData } from "constants/screensData";
+import { LandingCardsData } from "src/constants/screensData";
 import { styles } from "./LandingScreen.styles";
 import { useNavigate } from "react-router-dom";
 import { Card, Typography, CardContent, CardActions } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { Item } from "components/ItemPaper/ItemPaper";
+import { Item } from "src/components/ItemPaper/ItemPaper";
 import { LandingCard } from "../../../@types/components";
-import MSButton from "components/MSButton/MSButton";
+import MSButton from "src/components/MSButton/MSButton";
 
 const LandingScreen = () => {
   return (

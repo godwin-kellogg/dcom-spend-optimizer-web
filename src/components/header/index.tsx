@@ -12,7 +12,7 @@ import HeaderContent from "./HeaderContent";
 import { useLocation, useNavigate } from "react-router-dom";
 // import Sidebar from "../sidebar/Sidebar";
 import { path } from "../../constants/routes";
-import { CustomDrawer } from "components/CustomDrawer/CustomDrawer";
+import { CustomDrawer } from "src/components/CustomDrawer/CustomDrawer";
 
 const Header = () => {
   const location = useLocation();
@@ -79,11 +79,7 @@ const toggleDrawer = (bool:boolean) =>
       open={openDrawer}
       toggleDrawer={toggleDrawer}
       />
-      {isCurrentPath() ? null : (
-        <>
-          {/* <Sidebar open={open} handleDrawerClose={handleDrawerClose} /> */}
-        </>
-      )}
+      
     </>
   );
 };

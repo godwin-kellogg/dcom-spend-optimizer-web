@@ -1,4 +1,4 @@
-import {DropDown} from "components/DropdownComponent/DropdownComponent";
+import {DropDown} from "src/components/DropdownComponent/DropdownComponent";
 import { styles } from "./MSOPredictiveTable.styles";
 import {
   Box,
@@ -17,8 +17,8 @@ import {
   ListItemText,
   ListItemIcon,
 } from "@mui/material";
-import { CalendarComponent } from "components/calendar/calendar";
-import MSButton from "components/MSButton/MSButton";
+import { CalendarComponent } from "src/components/calendar/calendar";
+import MSButton from "src/components/MSButton/MSButton";
 import { rows } from "./MSOPredictionTableData";
 import { ExploreOutlined, Save, AllInclusive } from "@mui/icons-material";
 import React from "react";
@@ -101,14 +101,14 @@ const Header = () => {
       <Grid item md={2.2}>
         <Typography component="div">Start Date</Typography>
         <Typography>
-          <CalendarComponent />
+          {/* <CalendarComponent /> */}
         </Typography>
       </Grid>
 
       <Grid item md={2.2}>
         <Typography component="div">End Date</Typography>
         <Typography>
-          <CalendarComponent />
+          {/* <CalendarComponent /> */}
         </Typography>
       </Grid>
 

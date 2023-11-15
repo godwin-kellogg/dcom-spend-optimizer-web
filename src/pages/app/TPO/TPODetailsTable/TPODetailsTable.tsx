@@ -15,7 +15,7 @@ import {
   AccordionSummary,
   AccordionDetails,
 } from "@mui/material";
-import {TPOPlanChip } from "components/TPOChip/tpoChips";
+import {TPOPlanChip } from "src/components/TPOChip/tpoChips";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import TaskAltOutlinedIcon from "@mui/icons-material/TaskAltOutlined";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";

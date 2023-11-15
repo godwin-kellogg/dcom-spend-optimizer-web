@@ -1,64 +1,80 @@
-.expandedAccordion {
-  background-color: rgba(43, 82, 221, 1);
-  color: var(--button-primary-on-primary, #dae0f9);
+/* General styles */
+.closeIcon {
+  margin: 2rem;
+  color: black !important;
+  font-weight: 600;
+}
+
+/* Navigation items */
+.home-text,
+.home-text-active {
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.03125rem;
+}
+
+.listItems,
+.listItems-active {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.03125rem;
+  cursor: pointer;
+  font-style: normal;
+  color: rgba(80, 81, 82, 1);
+}
+
+.listItems-active {
+  color: rgba(34, 34, 35, 1);
+}
+
+.listItems:hover {
+  color: rgba(43, 82, 221, 1);
+}
+
+/* Expanded accordion styles */
+.expandedAccordion,
+.expandedAccordionNormal {
   font-size: 1rem;
   font-weight: 700;
   letter-spacing: 0.03125rem;
+  margin-top: 1rem;
+  transition: background-color 0.3s;
+}
+
+.expandedAccordion {
+  background-color: rgba(43, 82, 221, 1);
+  color: var(--button-primary-on-primary, #dae0f9);
   border-radius: 0.5rem;
-  padding-right: 1;
-  padding-left: 0;
 }
 
 .expandedAccordionNormal {
   color: var(--color-set-type-black-primary, #202020);
-  font-size: 1rem;
-  font-style: normal;
+}
+
+.expandedAccordion:hover,
+.expandedAccordionNormal:hover {
+  background-color: rgb(39, 70, 184);
+  border-radius: 0.5rem;
+  color: var(--button-primary-on-primary, #dae0f9);
+}
+
+/* List icons styles */
+.listIconsExpended,
+.listIconNormal {
+  font-size: 0.75rem;
   font-weight: 700;
-  letter-spacing: 0.03125rem;
+  transition: 0.3s ease-in-out;
 }
 
 .listIconsExpended {
   color: var(--button-primary-on-primary, #dae0f9);
-  font-size: 0.75rem;
-  font-weight: 700;
 }
 
 .listIconNormal {
   color: black;
-  font-size: 0.75rem;
-  font-weight: 700;
-}
-.listItems {
-  color: rgba(80, 81, 82, 1);
-  font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: 0.03125rem;
-  cursor: pointer;
-  font-style: normal;
-}
-.listItems-active {
-  color: rgba(34, 34, 35, 1);
-  font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: 0.03125rem;
-  cursor: pointer;
-  font-style: normal;
 }
 
-.listTypography {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 0.5rem;
-}
-.closeIcon {
-  margin: 1rem;
-  color: black;
-  font-weight: 600;
-}
-.home-text{
-    margin: "-3px";
-    font-weight: 600;
-    font-size: "1rem";
-    letter-spacing: "0.03125rem";
+.listIconsExpended,
+.listIconNormal:hover {
+  color: var(--button-primary-on-primary, #dae0f9);
 }

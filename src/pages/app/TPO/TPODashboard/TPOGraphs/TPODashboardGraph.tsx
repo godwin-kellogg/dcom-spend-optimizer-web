@@ -26,9 +26,9 @@ import {
 } from "recharts";
 import { Grid } from "@mui/material";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
-import {DropDown} from "components/DropdownComponent/DropdownComponent";
-import { CalendarComponent } from "components/calendar/calendar";
-import MSButton from "components/MSButton/MSButton";
+import {DropDown} from "src/components/DropdownComponent/DropdownComponent";
+import { CalendarComponent } from "src/components/calendar/calendar";
+import MSButton from "src/components/MSButton/MSButton";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 
 const styless = {
@@ -292,7 +292,7 @@ const TPODashboardGraph = ({ data }: any) => {
                     From
                   </Typography>
                   <Typography width="100%">
-                    <CalendarComponent isFrom={true} />
+                    {/* <CalendarComponent isFrom={true} /> */}
                   </Typography>
                   <Typography
                     sx={{ display: "flex", alignItems: "end", margin: 1 }}
@@ -300,7 +300,7 @@ const TPODashboardGraph = ({ data }: any) => {
                     To
                   </Typography>
                   <Typography width="100%">
-                    <CalendarComponent isFrom={false} />
+                    {/* <CalendarComponent isFrom={false} /> */}
                   </Typography>
                 </Stack>
               </Grid>
@@ -368,7 +368,7 @@ const TPODashboardGraph = ({ data }: any) => {
                     From
                   </Typography>
                   <Typography width="100%">
-                    <CalendarComponent isFrom={true} />
+                    {/* <CalendarComponent isFrom={true} /> */}
                   </Typography>
                   <Typography
                     sx={{ display: "flex", alignItems: "end", margin: 1 }}
@@ -376,7 +376,7 @@ const TPODashboardGraph = ({ data }: any) => {
                     To
                   </Typography>
                   <Typography width="100%">
-                    <CalendarComponent isFrom={false} />
+                    {/* <CalendarComponent isFrom={false} /> */}
                   </Typography>
                 </Stack>
               </Grid>

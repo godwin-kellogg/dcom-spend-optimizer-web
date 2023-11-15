@@ -1,8 +1,8 @@
-import DashboardLayout from "components/ dashboardLayout/ DashboardLayout";
+import DashboardLayout from "src/components/dashboardLayout/DashboardLayout";
 import { Route, Routes } from "react-router-dom";
 import LandingScreen from "./landingScreen/LandingScreen";
 import UserManageMent from "./userManageMent/UserManageMent";
-import { routes } from "constants/routes";
+import { routes } from "src/constants/routes";
 import TPODashboard from "./TPO/TPODashboard/TPODahboard";
 import TPOOptimiser from "./TPO/TPOOptimiser/TPOOptimisers";
 import TPOMonthDetails from "./TPO/TPODetails/TPOMonthDeails";

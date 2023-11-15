@@ -1,6 +1,6 @@
 import { Action, ThunkAction, configureStore } from "@reduxjs/toolkit";
-import usersReducer from "redux/reducers/users.reducer";
-import authReducer from "redux/reducers/auth.reducer";
+import usersReducer from "src/redux/reducers/users.reducer";
+import authReducer from "src/redux/reducers/auth.reducer";
 
 export const store = configureStore({
     middleware: (getDefaultMiddleware) =>

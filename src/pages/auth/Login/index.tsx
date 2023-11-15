@@ -10,9 +10,9 @@
 import { useMsal } from "@azure/msal-react";
 import LoginScreen from "./LoginScreen";
 import { useNavigate } from "react-router-dom";
-import { path } from "constants/routes";
+import { path } from "src/constants/routes";
 import { useDispatch } from "react-redux";
-import { authData } from "redux/reducers/auth.reducer";
+import { authData } from "src/redux/reducers/auth.reducer";
 
 const Login = () => {
   const navigate = useNavigate();

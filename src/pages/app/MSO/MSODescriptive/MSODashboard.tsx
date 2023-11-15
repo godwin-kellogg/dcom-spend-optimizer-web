@@ -17,13 +17,13 @@ import {
   Typography,
   styled,
 } from "@mui/material";
-import { DropDown } from "components/DropdownComponent/DropdownComponent";
-import { Item } from "components/ItemPaper/ItemPaper";
-import MSButton from "components/MSButton/MSButton";
-import { Cards } from "components/MSOSmallCards/MSOSmallCards";
-import { MSOProgressCard } from "components/ProgressCard/ProgressCard";
-import { CalendarComponent } from "components/calendar/calendar";
-import { DrawerHeader, Filter } from "components/sidebar/FilterSidebar";
+import { DropDown } from "src/components/DropdownComponent/DropdownComponent";
+import { Item } from "src/components/ItemPaper/ItemPaper";
+import MSButton from "src/components/MSButton/MSButton";
+import { Cards } from "src/components/MSOSmallCards/MSOSmallCards";
+import { MSOProgressCard } from "src/components/ProgressCard/ProgressCard";
+import { CalendarComponent } from "src/components/calendar/calendar";
+import { DrawerHeader, Filter } from "src/components/sidebar/FilterSidebar";
 import React from "react";
 import {
   Bar,
@@ -150,7 +150,7 @@ function FilterSidebar({ open, onClose }: any) {
                 From
               </Typography>
               <Typography>
-                <CalendarComponent isFrom={true} />
+                {/* <CalendarComponent isFrom={true} /> */}
               </Typography>
             </ListItem>
             <ListItem sx={{ marginTop: 3 }}>
@@ -158,7 +158,7 @@ function FilterSidebar({ open, onClose }: any) {
                 To
               </Typography>
               <Typography>
-                <CalendarComponent isFrom={false} />
+                {/* <CalendarComponent isFrom={false} /> */}
               </Typography>
             </ListItem>
           </ListItemText>

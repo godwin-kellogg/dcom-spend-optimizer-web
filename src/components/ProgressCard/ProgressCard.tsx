@@ -1,39 +1,78 @@
-import { Card, CardContent, CardActions, Typography } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  CardActions,
+  Typography,
+  IconButton,
+} from "@mui/material";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import { cardStyles } from "./ProgressCard.styles";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import { styles } from "./ProgressCard.styles";
 import { CardProps } from "../../@types/components";
-import { Item } from "components/ItemPaper/ItemPaper";
+import { Item } from "src/components/ItemPaper/ItemPaper";
+import React from "react";
 
 export const TPOProgressCard = ({
   header,
   subHeader,
-  bgColor,
-  actionLeft,
-  actionRight,
-  rightColor,
+  action,
+  delta,
 }: CardProps) => {
-  const cardFont = {
-    color: rightColor,
-    fontWeight: 700,
-    fontSize: 14,
-  };
+  const [posDel, setDel] = React.useState<boolean>(false);
+  const [isKellog, setKellog] = React.useState<boolean>(false);
+  React.useEffect(() => {
+    if (delta && action) {
+      setDel(parseFloat(delta) > 0);
+      setKellog(action === "Kelloggs");
+    }
+  }, [delta]);
 
   return (
-    <Card variant="outlined" style={cardStyles.tpoMain}>
+    <Card variant="outlined" style={styles.tpoMain}>
       <CardContent>
-        <Typography style={cardStyles.text}>{subHeader}</Typography>
-        <Typography style={cardStyles.textBig}>{header}</Typography>
+        <Typography style={styles.text}>{subHeader}</Typography>
+        <Typography style={styles.textBig}>{header}</Typography>
       </CardContent>
       <CardActions
-        sx={{ backgroundColor: bgColor }}
-        style={cardStyles.cardAction}
+        sx={{
+          backgroundColor: isKellog
+            ? styles.kellBg
+            : posDel
+            ? styles.posBg
+            : styles.negBg,
+        }}
+        style={styles.cardAction}
       >
-        <Typography style={cardStyles.actionTypography}>
-          {actionLeft}
-        </Typography>
-        <Typography sx={cardFont}>
-          {actionRight}
-          <ArrowUpwardIcon sx={cardFont} />
+        <Typography style={styles.actionTypography}>{action}</Typography>
+        <Typography
+          sx={[
+            isKellog ? styles.kellText : posDel ? styles.delPos : styles.delNeg,
+            styles.delFont,
+          ]}
+        >
+          {delta !== undefined
+            ? delta.startsWith("-")
+              ? delta.substring(1)
+              : delta
+            : ""}
+          <IconButton
+            size="small"
+            disableRipple
+            sx={[
+              isKellog
+                ? styles.kellText
+                : posDel
+                ? styles.delPos
+                : styles.delNeg,
+              { paddingRight: 0, cursor: "auto" },
+            ]}
+          >
+            {posDel ? (
+              <ArrowUpwardIcon fontSize="small" />
+            ) : (
+              <ArrowDownwardIcon fontSize="small" />
+            )}
+          </IconButton>
         </Typography>
       </CardActions>
     </Card>
@@ -43,8 +82,12 @@ export const TPOProgressCard = ({
 export const MSOProgressCard = ({ header, subHeader }: CardProps) => {
   return (
     <Item radius="0.5rem">
-      <Typography style={cardStyles.text} ml={1}>{subHeader}</Typography>
-      <Typography  style={cardStyles.textBig} ml={1}>{header}</Typography>
+      <Typography style={styles.text} ml={1}>
+        {subHeader}
+      </Typography>
+      <Typography style={styles.textBig} ml={1}>
+        {header}
+      </Typography>
     </Item>
   );
 };

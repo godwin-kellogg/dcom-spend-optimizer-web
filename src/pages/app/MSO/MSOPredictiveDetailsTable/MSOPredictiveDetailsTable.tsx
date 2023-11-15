@@ -20,7 +20,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { TPOPlanChip } from "components/TPOChip/tpoChips";
+import { TPOPlanChip } from "src/components/TPOChip/tpoChips";
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { rows } from "./MSODetailsTable.data";

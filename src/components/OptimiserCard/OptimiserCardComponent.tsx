@@ -1,20 +1,19 @@
+import AddIcon from "@mui/icons-material/Add";
+import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
+import GridViewIcon from "@mui/icons-material/GridView";
 import {
+  Box,
   Card,
   CardActions,
   CardContent,
-  CardHeader,
-  Typography,
   Stack,
-  Box,
+  Typography,
 } from "@mui/material";
-import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
-import GridViewIcon from "@mui/icons-material/GridView";
-import { cardStyles } from "./OptimiserComponent.styles";
 import Grid from "@mui/material/Unstable_Grid2";
-import { TPOChip, TPOPlanChip } from "../TPOChip/tpoChips";
+import MSButton from "src/components/MSButton/MSButton";
 import { TPOData } from "../../@types/components";
-import MSButton from "components/MSButton/MSButton";
-import AddIcon from "@mui/icons-material/Add";
+import { TPOChip, TPOPlanChip } from "../TPOChip/tpoChips";
+import { cardStyles } from "./OptimiserComponent.styles";
 
 export const TPOOptimiserCards = ({
   cardTitle,
@@ -29,14 +28,16 @@ export const TPOOptimiserCards = ({
 }: TPOData) => {
   return (
     <Card sx={cardStyles.cardContainer}>
-      <CardHeader
-        sx={cardStyles.cardHeader}
-        title={cardTitle}
-        action={
-          isData ? <TPOPlanChip color={titleChipColor} value={titleChip} /> : ""
-        }
-        onClick={onClickHeader}
-      />
+      <CardContent sx={cardStyles.cardHeader}>
+        <Box onClick={onClickHeader}>{cardTitle}</Box>
+        <Box>
+          {isData ? (
+            <TPOPlanChip color={titleChipColor} value={titleChip} />
+          ) : (
+            ""
+          )}
+        </Box>
+      </CardContent>
       {isData ? (
         <>
           <CardContent sx={{ padding: 0 }}>
@@ -74,41 +75,21 @@ export const TPOOptimiserCards = ({
                     Categories
                   </Typography>
                 </Box>
-                {chipCategory.map((value: any, key: number) => (
-                  <TPOChip value={value.name} key={key} boolVal={value.value} />
-                ))}
+                <Box sx={{ width: "100%", height: "auto" }}>
+                  {chipCategory.map((value: any, key: number) => (
+                    <TPOChip
+                      value={value.name}
+                      key={key}
+                      boolVal={value.value}
+                    />
+                  ))}
+                </Box>
               </Grid>
             </Grid>
           </CardActions>
         </>
       ) : (
-        <>
-          <CardActions
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              paddingTop: 4,
-              paddingBottom: 4,
-            }}
-          >
-            <Stack direction="column">
-              <Typography align="center" sx={cardStyles.text2}>
-                No Existing Plans
-              </Typography>
-              <Typography align="center" sx={cardStyles.noPlan}>
-                Please create a new plan to see the details here.
-              </Typography>
-              <Typography align="center">
-                <MSButton
-                  startIcon={<AddIcon />}
-                  title="Add new plan"
-                  sx={{ marginTop: 2, width: "50%" }}
-                  onClick={onClickButton}
-                />
-              </Typography>
-            </Stack>
-          </CardActions>
-        </>
+        <NoPlanCard onClickButton={onClickButton} />
       )}
     </Card>
   );
@@ -127,14 +108,16 @@ export const MSOOptimiserCards = ({
 }: TPOData) => {
   return (
     <Card sx={cardStyles.cardContainer}>
-      <CardHeader
-        sx={cardStyles.cardHeader}
-        title={cardTitle}
-        action={
-          isData ? <TPOPlanChip color={titleChipColor} value={titleChip} /> : ""
-        }
-        onClick={onClickHeader}
-      />
+      <CardContent sx={cardStyles.cardHeader}>
+        <Box onClick={onClickHeader}>{cardTitle}</Box>
+        <Box>
+          {isData ? (
+            <TPOPlanChip color={titleChipColor} value={titleChip} />
+          ) : (
+            ""
+          )}
+        </Box>
+      </CardContent>
       {isData ? (
         <>
           <CardContent sx={{ padding: 0 }}>
@@ -169,34 +152,31 @@ export const MSOOptimiserCards = ({
           </CardActions>
         </>
       ) : (
-        <>
-          <CardActions
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              paddingTop: 4,
-              paddingBottom: 4,
-            }}
-          >
-            <Stack direction="column">
-              <Typography align="center" sx={cardStyles.text2}>
-                No Existing Plans
-              </Typography>
-              <Typography align="center" sx={cardStyles.noPlan}>
-                Please create a new plan to see the details here.
-              </Typography>
-              <Typography align="center">
-                <MSButton
-                  startIcon={<AddIcon />}
-                  title="Add new plan"
-                  sx={{ marginTop: 2, width: "50%" }}
-                  onClick={onClickButton}
-                />
-              </Typography>
-            </Stack>
-          </CardActions>
-        </>
+        <NoPlanCard onClickButton={onClickButton} />
       )}
     </Card>
+  );
+};
+
+const NoPlanCard = ({ onClickButton }: any) => {
+  return (
+    <CardActions sx={cardStyles.noplanContainer}>
+      <Stack direction="column" padding={0}>
+        <Typography align="center" sx={cardStyles.text2}>
+          No Existing Plans
+        </Typography>
+        <Typography align="center" sx={cardStyles.noPlanText}>
+          Please create a new plan to see the details here.
+        </Typography>
+        <Typography align="center">
+          <MSButton
+            startIcon={<AddIcon />}
+            title="Add new plan"
+            sx={{ marginTop: 2, width: "50%" }}
+            onClick={onClickButton}
+          />
+        </Typography>
+      </Stack>
+    </CardActions>
   );
 };

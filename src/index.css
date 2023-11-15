@@ -30,11 +30,11 @@ body {
   .custom-drawer .MuiDrawer-paper {
     max-width: 18rem;
     box-sizing: border-box;
-    height: 73vh;
-    margin-top: 6.5rem;
+    height: 75vh;
+    left: 1.5rem;
+    top: 6.5rem;
     background-color: white;
     border-radius: 0.5rem;
-    margin-left: 2rem;
   }
   .main-container {
     width: 100%;
