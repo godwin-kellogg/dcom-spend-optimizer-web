@@ -50,11 +50,12 @@ export const TPOProgressCard = ({
             styles.delFont,
           ]}
         >
-          {delta !== undefined
-            ? delta.startsWith("-")
+          {/* {delta !== undefined
+            ? delta?.startsWith("-")
               ? delta.substring(1)
               : delta
-            : ""}
+            : ""} */}
+            {delta}
           <IconButton
             size="small"
             disableRipple

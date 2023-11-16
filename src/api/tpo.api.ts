@@ -20,11 +20,16 @@ export const filterApi = async ()=>{
 
 const fetchData = async (endpoint:string, queryParams:any) => {
   let queryString = '';
-  if (Object.keys(queryParams).length > 0) {
-    queryString = Object.entries(queryParams)
-      .map(([key, value]) => `${key}=${value}`)
-      .join('&');
-  };
+  if (queryParams) {
+    const validParams = Object.entries(queryParams)
+      .filter(([key, value]) => value !== undefined)
+      .map(([key, value]) => `${key}=${value}`);
+
+    if (validParams.length > 0) {
+      queryString = validParams.join('&');
+    }
+  }
+  console.log("query params api", queryString);
 
   try {
     const response = await fetch(`${API_URL}/${endpoint}${queryString ? '?' + queryString : ''}`, object);
@@ -36,18 +41,15 @@ const fetchData = async (endpoint:string, queryParams:any) => {
 
 
 export const getFilteredData = async (data:any) => {
-  const queryParams = {
-    from_time: "2022-01-01",
-    to_time: "2023-08-31"
-  };
-
   try {
-    const s2s = await fetchData('s-to-s-ratio', queryParams);
-    const spend = await fetchData('spends', queryParams);
-    // const sales = await fetchData('sales', queryParams);
+    const s2s = await fetchData('s-to-s-ratio', data);
+    const spend = await fetchData('spends', data);
+    const sales = await fetchData('sales', data);
+    const gp = await fetchData('gross-profit', data);
+    const offerDepth = await fetchData('offer-depth', data);
     if (s2s === null || spend === null ) return false;
     // console.log("Response TPO API", s2s, spend, sales);
-    return {cardData : {s2s, spend}};
+    return {cardData : {s2s, spend, sales, gp, offerDepth}, graphData : {}};
   } catch (error) {
     return false;
   }

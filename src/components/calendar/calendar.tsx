@@ -32,7 +32,7 @@ const formattedLastDay = lastDayOfMonth.format("DD-MM-YYYY");
 const initialFromDate = dayjs(`${formattedFirstDay}`, "DD-MM-YYYY");
 const initialToDate = dayjs(`${formattedLastDay}`, "DD-MM-YYYY");
 const handleDateChange = (date: any) => {
-  const formattedDate = dayjs(date).format("DD-MM-YYYY");
+  const formattedDate = dayjs(date).format("YYYY-MM-DD");
   if (onDateSelect) {
     onDateSelect(formattedDate);
   }

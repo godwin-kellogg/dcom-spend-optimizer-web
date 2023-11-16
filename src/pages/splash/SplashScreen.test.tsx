@@ -32,7 +32,7 @@ describe("SplashScreen", () => {
   test("should render Login component when accessing the root path", () => {
     render(
       <Provider store={store}>
-        <BrowserRouter>
+        <BrowserRouter basename="">
         <Routes>
           <Route path={"/"} element={<Navigate to={routes.login} replace />} />
           <Route path={routes.login} element={<Login />} />

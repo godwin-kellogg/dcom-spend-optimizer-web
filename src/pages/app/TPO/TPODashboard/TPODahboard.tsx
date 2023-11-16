@@ -60,9 +60,9 @@ const TPODashboard = () => {
   }, []);
 
 
-  const TPOdata = async ()=>{
+  const TPOdata = async (data?:any)=>{
     try {
-    const response = await getFilteredData("hello");
+    const response = await getFilteredData(data);
     if(response){
       const cardRes = response.cardData;
       setCardVal(cardRes);
@@ -78,6 +78,7 @@ const TPODashboard = () => {
 
   const applyFil = (data:any)=>{
     console.log("Apply filter is working fine++", data);
+    TPOdata(data);
   }
   return (
     <Grid container sx={{ ml: -4 }}>
@@ -106,18 +107,45 @@ const TPODashboard = () => {
 
 export default TPODashboard;
 
-const RightConatiner = ({value} : any) => {
+const RightConatiner = ({value}: any) => {
   const [myCard, setCard] = React.useState(CardData);
 
   React.useEffect(()=>{
     if(value){
-      const s2sRatio = value.s2s?.s_to_s_ratio;
+      const s2sRatio:string = value.s2s?.s_to_s_ratio;
       const s2sDelta = value.s2s?.s_to_s_delta;
-      // const updatedCardData = [...myCard];
-      // updatedCardData[0].cards[0].header = 's2sRatio';
-      // updatedCardData[0].cards[0].delta = value.s2s?.s_to_s_delta;
-      // setCard(updatedCardData);
-      console.log("card data from States", s2sRatio, s2sDelta, value)
+      const spendVal = value.spend?.spends;
+      const spendDelta = value.spend?.spend_delta;
+      const salesval = value.sales?.sales;
+      const salesDel = value.sales?.sales_delta;
+      const absgp = value.gp?.abs_gross_profit;
+      const gpdel = value.gp?.gross_profit_delta;
+      const gpm = value.gp?.gross_profit_margin;
+      const offerDep = value.offerDepth.offer_depth;
+      const offer_del = value.offerDepth.offer_depth_delta;
+      
+
+      const updatedCardData = [...myCard];
+      updatedCardData[0].cards[0].header = s2sRatio ? Number(s2sRatio).toFixed(2) : 'N/A';
+      updatedCardData[0].cards[0].delta = s2sDelta ? Number(s2sDelta).toFixed(2) : 'N/A';
+      updatedCardData[0].cards[1].header = (spendVal / 100000).toFixed(1) + "Lac(s)";
+      updatedCardData[0].cards[1].delta = spendDelta ? spendDelta : 'N/A';
+      updatedCardData[0].cards[2].header = (salesval / 100000).toFixed(1) + "Lac(s)";
+      updatedCardData[0].cards[2].delta = salesDel ? Number(salesDel / 100000).toFixed(2) + "L" : 'N/A';
+
+      updatedCardData[1].cards[0].header = (absgp / 100000).toFixed(1) + "Lac(s)";
+      updatedCardData[1].cards[0].delta = gpdel ? Number(gpdel).toFixed(2) : 'N/A';
+      updatedCardData[1].cards[1].header = gpm ? Number(gpm).toFixed(2) + "%" : "N/A";
+      updatedCardData[1].cards[1].delta = gpdel ? Number(gpdel).toFixed(2) : 'N/A';
+
+      updatedCardData[2].cards[0].header = offerDep ? Number(offerDep).toFixed(2) + "%" : "N/A";;
+      updatedCardData[2].cards[0].delta = offer_del ? Number(offer_del).toFixed(2) : 'N/A';
+      updatedCardData[2].cards[1].header = '-';
+      updatedCardData[2].cards[1].delta = 'N/A';
+
+
+      setCard(updatedCardData);
+      console.log("card data from States+++", value, salesval)
     }
     
   },[value]);
@@ -163,11 +191,11 @@ function FilterSidebar({ open, onClose, applyFilters, data }: any) {
 
 
   const [filters, setFilters] = React.useState<any>({
-    category : "ALL CATEGORIES",
-    skus : "ALL SKUs",
-    promotions : "ALL PROMOTIONS",
-    to_timeframe : "",
-    from_timeframe : ""
+    category : undefined,
+    skus : undefined,
+    promotions : undefined,
+    to_timeframe : undefined,
+    from_timeframe : undefined
   });
 
   const handleDropDownChange = (type: string, value: any) => {
@@ -214,10 +242,6 @@ function FilterSidebar({ open, onClose, applyFilters, data }: any) {
       }));
     }
   };
-
-  const applyFil = ()=>{
-    console.log("Apply filter is working fine");
-  }
 
   React.useEffect(() => {
     if (data) {

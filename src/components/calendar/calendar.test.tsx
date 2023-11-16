@@ -2,9 +2,11 @@ import { render, fireEvent } from "@testing-library/react";
 import {CalendarComponent} from "./calendar";
 
 describe("Calendar Component", ()=>{
-    // it("render calendar component without error", ()=>{
-    //     render(<CalendarComponent />)
-    // });
+    it("render calendar component without error", ()=>{
+        render(<CalendarComponent onDateSelect={function (value: any): void {
+            throw new Error("Function not implemented.");
+        } } timeframe={[]} />)
+    });
 
     // it("calls the onDateSelect callback when a date is selected", ()=>{
     //     const onDateSelect = jest.fn();
