@@ -2,6 +2,7 @@
   "name": "musigma-react-starter-kit",
   "version": "0.1.0",
   "private": true,
+  "homepage": "$PUBLIC_URL",
   "dependencies": {
     "@azure/msal-browser": "^2.38.0",
     "@azure/msal-react": "^1.5.9",
@@ -21,7 +22,7 @@
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.6",
     "apexcharts": "^3.42.0",
-    "axios": "^1.4.0",
+    "axios": "^1.5.1",
     "chart.js": "^4.3.0",
     "dayjs": "^1.11.9",
     "i18next": "^23.2.11",
@@ -35,6 +36,7 @@
     "react-scripts": "5.0.1",
     "recharts": "^2.8.0",
     "redux": "^4.2.1",
+    "resize-observer-polyfill": "^1.5.1",
     "sass": "^1.63.6",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
@@ -70,6 +72,7 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@types/webpack-env": "^1.18.4"
   }
 }

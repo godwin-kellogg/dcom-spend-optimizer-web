@@ -1,17 +1,13 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "allowUnreachableCode":false,
-    "allowUnusedLabels":false,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
@@ -23,9 +19,8 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "jsx": "react-jsx",
-    "baseUrl": "src",
+    "baseUrl": ".",
+    "types": ["node", "webpack-env"]
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src"]
 }
