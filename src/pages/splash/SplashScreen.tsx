@@ -46,9 +46,10 @@ const SplashScreen = () => {
   
     return null;
   };
+  const basename = process.env.PUBLIC_URL || '';
   
   return (
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
+    <BrowserRouter basename={basename}>
       <MetaDataWrapper />
       <Routes>
         <Route path="/" element={<Navigate to={routes.login} replace />} />
